@@ -2,7 +2,8 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    # Both long-lived branches: develop integrates, main carries releases.
+    branches: [develop, main]
   pull_request:
 
 concurrency:
