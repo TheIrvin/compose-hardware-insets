@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    # A few minutes past a normal run, so a stall fails with a readable log
+    # instead of showing a pending check for hours.
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          # Not 17. Robolectric loads the Android jar for the emulated SDK and
+          # the API 36 jar refuses to load under anything earlier, failing every
+          # test in setup with a message that names the JVM rather than this.
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      - name: Tests and lint
+        run: ./gradlew check --stacktrace
+
+      - name: Public API unchanged
+        # Separate from `check` so its failure is unambiguous: this one means the
+        # public surface moved and the dump was not regenerated.
+        run: ./gradlew apiCheck --stacktrace
+
+      - name: Test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: hardware-insets/build/reports/tests/
+          if-no-files-found: ignore

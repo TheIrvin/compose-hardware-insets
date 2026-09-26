@@ -1,0 +1,57 @@
+# compose-hardware-insets
+
+> An Android Compose library for hardware that is physically in the way of your UI: display cutouts
+> and waterfall curves. Compose exposes how deep the cutout goes into each edge but not where the
+> camera is, so there is no supported way to ask whether the hardware is in the way of one
+> particular control. This answers that, and keeps the geometry pure so it can be tested against
+> hardware you do not own.
+
+Kotlin, Android, minSdk 23, Apache 2.0. Maven coordinates `io.github.damson:hardware-insets`.
+
+## Public API
+
+- `ScreenEdge`: `TOP`, `BOTTOM`, `LEFT`, `RIGHT`. `TOP` and `BOTTOM` are edges of the screen and
+  never move; `LEFT` and `RIGHT` are edges of the device held upright. `isHorizontalEdge`,
+  `opposite`. Treat the constant names as a stored format if you persist one.
+- `ScreenEdge.onScreenAt(rotation: Int)`: which screen edge a device edge has become. `rotation` is
+  a `Surface.ROTATION_*` constant, not degrees. Always returns a horizontal edge.
+- `CutoutShape(bounds: List<Rect>, topInset, bottomInset, leftInset, rightInset)`: `bounds` is where
+  the cameras are, in pixels, in window coordinates. Empty below API 28 and on hardware with no
+  cutout.
+- `View.cutoutShape(): State<CutoutShape>`: live state, refreshed on every inset dispatch. Registers
+  the view's single `OnApplyWindowInsetsListener`, so never call it on a `ComposeView`, whose
+  `setContent` claims that slot silently.
+- `View.stopReportingCutoutShape()`: removes it. Clears the whole slot, not just this listener.
+- `HardwarePolicy(isCutoutIncluded = true, isWaterfallIncluded = true, areSystemBarsIncluded = false)`:
+  which of the window's insets count as hardware.
+- `hardwareInsets(position: ScreenEdge = TOP, policy: HardwarePolicy = HardwarePolicy(), isFarEdgeIgnored: Boolean = false): WindowInsets`
+- `Modifier.clearOfTheHardware(...)`: the same, as padding. Apply after a background, so the
+  background keeps its full size and only what is inside it moves.
+- `cornerClearance(cutoutBounds: List<Rect>, position: ScreenEdge = TOP, isAtTheEnd: Boolean = false): (controlWidth: Int) -> IntOffset`:
+  horizontal edges only; returns a function answering `IntOffset.Zero` on `LEFT` or `RIGHT`.
+- `cornerClearanceFor(cutoutBounds, controlWidth, sideInset, windowWidth, windowHeight, isRtl, isAtTop): IntOffset`:
+  the pure geometry, public so a caller can ask it directly and test it.
+- `CutoutMode`: `ALWAYS` (falls back to `SHORT_EDGES` below API 30), `SHORT_EDGES`, `DEFAULT`,
+  `NEVER`.
+- `ComponentActivity.drawBehindTheHardware(statusBarStyle: SystemBarStyle? = null, navigationBarStyle: SystemBarStyle? = null, cutoutMode: CutoutMode = ALWAYS)`:
+  null styles keep whatever `enableEdgeToEdge` picks. `cutoutMode` is ignored below API 28.
+- `ComponentActivity.hideTheSystemBars(types: Int = WindowInsetsCompat.Type.systemBars(), behavior: Int = BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)`
+
+## Traps a caller hits
+
+- A centred punch-hole reports an inset across the whole window width. Padding by it moves a corner
+  control far clear of a camera it never overlapped. That is what `cornerClearance` exists for.
+- A `wrap_content` `ComposeView` swallows every touch inside its bounds, so padding it on the edge
+  away from its content turns that padding into surface nobody can reach. `isFarEdgeIgnored = true`
+  is the opt out, and it is off by default because it is a host's workaround rather than a fact
+  about hardware.
+- The system bars still report insets while hidden, which is why they are excluded by default.
+- `waterfall` is always zero below API 30 and `displayCutout` below API 28. Neither needs a branch
+  in your code.
+
+## Docs
+
+- [README.md](README.md): what it does, how to use it, the roadmap.
+- [AGENTS.md](AGENTS.md): how to work on it, and the rules that bite.
+- [CONTRIBUTING.md](CONTRIBUTING.md): the one command, and what a change needs.
+- [CHANGELOG.md](CHANGELOG.md): what changed, and the known gaps.

@@ -1,0 +1,41 @@
+[versions]
+# Kept deliberately behind the newest where a cap has a reason; each such line
+# says why, so the next person raising it knows what they are taking on.
+agp = "8.13.2"
+kotlin = "2.2.21"
+# AGP 8.x reads an internal API that Gradle 9.6 removed, so the wrapper stays
+# at 9.5 until AGP 9. See the wrapper properties.
+binaryCompatibility = "0.18.1"
+
+activity = "1.13.0"
+appcompat = "1.7.1"
+composeBom = "2026.06.01"
+coreKtx = "1.18.0"
+
+assertj = "3.27.7"
+junit = "4.13.2"
+robolectric = "4.17"
+
+[libraries]
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
+androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout" }
+androidx-compose-runtime = { module = "androidx.compose.runtime:runtime" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+androidx-test-core = { module = "androidx.test:core", version = "1.7.0" }
+
+assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+junit = { module = "junit:junit", version.ref = "junit" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+
+[plugins]
+android-library = { id = "com.android.library", version.ref = "agp" }
+binary-compatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibility" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
