@@ -9,6 +9,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Read-only by default. Nothing here writes to the repository, and a workflow
+# that cannot write is a workflow a compromised action cannot use to push.
 permissions:
   contents: read
 
@@ -16,33 +18,36 @@ jobs:
   check:
     runs-on: ubuntu-latest
     # A few minutes past a normal run, so a stall fails with a readable log
-    # instead of showing a pending check for hours.
+    # rather than showing a pending check for hours.
     timeout-minutes: 20
 
     steps:
-      - uses: actions/checkout@v5
+      # Actions are pinned to commit SHAs, not tags: a tag is mutable, so
+      # `@v7` is a promise from whoever can move it. The comment is the human
+      # readable version and is not what resolves.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: temurin
-          # Not 17. Robolectric loads the Android jar for the emulated SDK and
-          # the API 36 jar refuses to load under anything earlier, failing every
-          # test in setup with a message that names the JVM rather than this.
+          # Not 17. Robolectric loads the Android jar for the emulated SDK, and
+          # the API 36 jar refuses to load under anything earlier: every test
+          # then fails in setup with a message naming the JVM rather than this.
           java-version: '21'
 
-      - uses: gradle/actions/setup-gradle@v5
+      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
 
       - name: Tests and lint
         run: ./gradlew check --stacktrace
 
       - name: Public API unchanged
-        # Separate from `check` so its failure is unambiguous: this one means the
+        # Separate from `check` so a failure here is unambiguous: it means the
         # public surface moved and the dump was not regenerated.
         run: ./gradlew apiCheck --stacktrace
 
       - name: Test report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: test-results
           path: hardware-insets/build/reports/tests/
