@@ -31,6 +31,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import io.github.damson.hardwareinsets.domain.ScreenEdge
+import io.github.damson.hardwareinsets.domain.HardwarePolicy
 
 /**
  * The contents' half of edge-to-edge. A surface covers the hardware and so

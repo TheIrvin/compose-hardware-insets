@@ -12,6 +12,9 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import io.github.damson.hardwareinsets.domain.CutoutShape
+import io.github.damson.hardwareinsets.platform.cutoutShape
+import io.github.damson.hardwareinsets.platform.stopReportingCutoutShape
 
 /**
  * The handle avoids a camera by its shape rather than by its inset, so where the

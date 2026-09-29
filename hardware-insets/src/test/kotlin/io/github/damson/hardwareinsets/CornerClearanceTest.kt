@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import io.github.damson.hardwareinsets.domain.cornerClearanceFor
 
 /**
  * A corner control sits in the corner of whichever edge it is anchored to, and

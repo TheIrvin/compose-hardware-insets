@@ -1,4 +1,4 @@
-package io.github.damson.hardwareinsets
+package io.github.damson.hardwareinsets.platform
 
 import android.os.Build
 import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
@@ -11,36 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-
-/**
- * How far the window is allowed to extend into the display cutout.
- *
- * The platform constant this maps to is only honoured from API 28, and
- * [ALWAYS] only exists from API 30, so each case says what it does below that.
- */
-enum class CutoutMode {
-    /**
-     * Into the cutout on every edge, falling back to [SHORT_EDGES] below API 30.
-     *
-     * The right answer for a surface that fills the window, and the wrong one
-     * for most apps: content lands under the camera unless something insets it.
-     */
-    ALWAYS,
-
-    SHORT_EDGES,
-    DEFAULT,
-    NEVER,
-    ;
-
-    internal fun toLayoutMode(): Int = when (this) {
-        ALWAYS ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-            else LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-        SHORT_EDGES -> LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-        DEFAULT -> LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT
-        NEVER -> LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER
-    }
-}
+import io.github.damson.hardwareinsets.domain.CutoutMode
 
 /**
  * Lays the window out behind the system bars and the display cutout, so content
@@ -101,4 +72,20 @@ fun ComponentActivity.hideTheSystemBars(
         systemBarsBehavior = behavior
         hide(types)
     }
+}
+
+/**
+ * What the framework calls each [CutoutMode].
+ *
+ * Here rather than on the enum: the mode is a choice a caller makes, and the
+ * constant it becomes is this layer's business. [CutoutMode.ALWAYS] only exists
+ * from API 30, so below that it falls back to the next-widest thing.
+ */
+internal fun CutoutMode.toLayoutMode(): Int = when (this) {
+    CutoutMode.ALWAYS ->
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+        else LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+    CutoutMode.SHORT_EDGES -> LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+    CutoutMode.DEFAULT -> LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT
+    CutoutMode.NEVER -> LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER
 }

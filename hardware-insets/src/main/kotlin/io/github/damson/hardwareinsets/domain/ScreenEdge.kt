@@ -1,4 +1,4 @@
-package io.github.damson.hardwareinsets
+package io.github.damson.hardwareinsets.domain
 
 import android.view.Surface
 

@@ -18,6 +18,9 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import io.github.damson.hardwareinsets.domain.CutoutMode
+import io.github.damson.hardwareinsets.platform.drawBehindTheHardware
+import io.github.damson.hardwareinsets.platform.hideTheSystemBars
 
 /**
  * Two decisions that arrive together and are not the same one.

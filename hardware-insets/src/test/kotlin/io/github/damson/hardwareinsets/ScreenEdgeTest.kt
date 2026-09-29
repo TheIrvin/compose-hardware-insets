@@ -3,6 +3,8 @@ package io.github.damson.hardwareinsets
 import android.view.Surface
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import io.github.damson.hardwareinsets.domain.ScreenEdge
+import io.github.damson.hardwareinsets.domain.onScreenAt
 
 /**
  * The mapping from the edge the user named to the edge the layout uses.

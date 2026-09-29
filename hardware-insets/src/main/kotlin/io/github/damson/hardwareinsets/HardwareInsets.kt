@@ -14,33 +14,11 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
-
-/**
- * Which of the window's insets count as hardware.
- *
- * The default is the two things physically in the way: the display cutout,
- * which is the camera, and the waterfall, which is the curved edge, drawable
- * but not reliably touchable. The system bars are software and are left out, so
- * an app that hides them is not padded by a bar nobody can see.
- *
- * Rounded corners are not offered. The platform reports them from API 31 as a
- * radius per corner rather than as an inset, so turning them into one is a
- * decision a caller has to make with its own corner shape in hand.
- *
- * @param isCutoutIncluded whether the cutout counts. Zero on hardware that has
- *   none, and below API 28, where the platform reports none at all.
- * @param isWaterfallIncluded whether the curved edge counts. Always zero below
- *   API 30, which is where the platform began reporting it.
- * @param areSystemBarsIncluded whether the status and navigation bars count.
- *   Off by default, because including a bar that is hidden insets content past
- *   an edge nothing occupies.
- */
-@Immutable
-data class HardwarePolicy(
-    val isCutoutIncluded: Boolean = true,
-    val isWaterfallIncluded: Boolean = true,
-    val areSystemBarsIncluded: Boolean = false,
-)
+import io.github.damson.hardwareinsets.domain.CutoutShape
+import io.github.damson.hardwareinsets.domain.HardwarePolicy
+import io.github.damson.hardwareinsets.domain.ScreenEdge
+import io.github.damson.hardwareinsets.domain.cornerClearanceFor
+import io.github.damson.hardwareinsets.platform.cutoutShape
 
 /**
  * How far content has to stay off each edge to clear the hardware there.
@@ -170,48 +148,4 @@ fun cornerClearance(
             isAtTop = position == ScreenEdge.TOP,
         )
     }
-}
-
-/**
- * The geometry [cornerClearance] is built on, kept pure so it can be tested
- * against rectangles no emulator here has the hardware to produce, and exposed
- * so a caller laying out its own control can ask the same question.
- *
- * A rectangle counts only if it overlaps the control's width **and** touches the
- * edge the control is anchored to. Without that second test a camera in the top
- * edge would push a bottom-anchored handle almost the height of the screen, and
- * a chin at the bottom would push a top-anchored one off it -- the platform
- * reports every cutout on the window, not only the near one.
- *
- * @param cutoutBounds the cutout rectangles, in window coordinates and pixels.
- * @param controlWidth how wide the control is, in pixels.
- * @param sideInset how far in from the near side the control already sits.
- * @param windowWidth the window's width in pixels, not the host view's.
- * @param windowHeight the window's height in pixels, not the host view's.
- * @param isRtl whether the control is measured from the right side rather than
- *   the left.
- * @param isAtTop whether the control is anchored to the top edge rather than
- *   the bottom one.
- * @return the offset to place the control at, relative to its corner.
- */
-fun cornerClearanceFor(
-    cutoutBounds: List<Rect>,
-    controlWidth: Int,
-    sideInset: Int,
-    windowWidth: Int,
-    windowHeight: Int,
-    isRtl: Boolean,
-    isAtTop: Boolean,
-): IntOffset {
-    val start = if (isRtl) windowWidth - sideInset - controlWidth else sideInset
-    val end = start + controlWidth
-
-    val overlapping = cutoutBounds.filter { it.right > start && it.left < end }
-    val depth = if (isAtTop) {
-        overlapping.filter { it.top <= 0 }.maxOfOrNull { it.bottom }
-    } else {
-        overlapping.filter { it.bottom >= windowHeight }.maxOfOrNull { windowHeight - it.top }
-    }
-
-    return IntOffset(x = sideInset, y = depth ?: 0)
 }

@@ -1,14 +1,24 @@
-public final class io/github/damson/hardwareinsets/CutoutMode : java/lang/Enum {
-	public static final field ALWAYS Lio/github/damson/hardwareinsets/CutoutMode;
-	public static final field DEFAULT Lio/github/damson/hardwareinsets/CutoutMode;
-	public static final field NEVER Lio/github/damson/hardwareinsets/CutoutMode;
-	public static final field SHORT_EDGES Lio/github/damson/hardwareinsets/CutoutMode;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/CutoutMode;
-	public static fun values ()[Lio/github/damson/hardwareinsets/CutoutMode;
+public final class io/github/damson/hardwareinsets/HardwareInsetsKt {
+	public static final fun clearOfTheHardware (Landroidx/compose/ui/Modifier;Lio/github/damson/hardwareinsets/domain/ScreenEdge;Lio/github/damson/hardwareinsets/domain/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/Modifier;
+	public static final fun cornerClearance (Ljava/util/List;Lio/github/damson/hardwareinsets/domain/ScreenEdge;ZLandroidx/compose/runtime/Composer;II)Lkotlin/jvm/functions/Function1;
+	public static final fun hardwareInsets (Lio/github/damson/hardwareinsets/domain/ScreenEdge;Lio/github/damson/hardwareinsets/domain/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/foundation/layout/WindowInsets;
 }
 
-public final class io/github/damson/hardwareinsets/CutoutShape {
+public final class io/github/damson/hardwareinsets/domain/CornerClearanceKt {
+	public static final fun cornerClearanceFor (Ljava/util/List;IIIIZZ)J
+}
+
+public final class io/github/damson/hardwareinsets/domain/CutoutMode : java/lang/Enum {
+	public static final field ALWAYS Lio/github/damson/hardwareinsets/domain/CutoutMode;
+	public static final field DEFAULT Lio/github/damson/hardwareinsets/domain/CutoutMode;
+	public static final field NEVER Lio/github/damson/hardwareinsets/domain/CutoutMode;
+	public static final field SHORT_EDGES Lio/github/damson/hardwareinsets/domain/CutoutMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/CutoutMode;
+	public static fun values ()[Lio/github/damson/hardwareinsets/domain/CutoutMode;
+}
+
+public final class io/github/damson/hardwareinsets/domain/CutoutShape {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (Ljava/util/List;IIII)V
@@ -18,8 +28,8 @@ public final class io/github/damson/hardwareinsets/CutoutShape {
 	public final fun component3 ()I
 	public final fun component4 ()I
 	public final fun component5 ()I
-	public final fun copy (Ljava/util/List;IIII)Lio/github/damson/hardwareinsets/CutoutShape;
-	public static synthetic fun copy$default (Lio/github/damson/hardwareinsets/CutoutShape;Ljava/util/List;IIIIILjava/lang/Object;)Lio/github/damson/hardwareinsets/CutoutShape;
+	public final fun copy (Ljava/util/List;IIII)Lio/github/damson/hardwareinsets/domain/CutoutShape;
+	public static synthetic fun copy$default (Lio/github/damson/hardwareinsets/domain/CutoutShape;Ljava/util/List;IIIIILjava/lang/Object;)Lio/github/damson/hardwareinsets/domain/CutoutShape;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBottomInset ()I
 	public final fun getBounds ()Ljava/util/List;
@@ -30,26 +40,7 @@ public final class io/github/damson/hardwareinsets/CutoutShape {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/damson/hardwareinsets/CutoutShapeKt {
-	public static final fun cutoutShape (Landroid/view/View;)Landroidx/compose/runtime/State;
-	public static final fun stopReportingCutoutShape (Landroid/view/View;)V
-}
-
-public final class io/github/damson/hardwareinsets/EdgeToEdgeKt {
-	public static final fun drawBehindTheHardware (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lio/github/damson/hardwareinsets/CutoutMode;)V
-	public static synthetic fun drawBehindTheHardware$default (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lio/github/damson/hardwareinsets/CutoutMode;ILjava/lang/Object;)V
-	public static final fun hideTheSystemBars (Landroidx/activity/ComponentActivity;II)V
-	public static synthetic fun hideTheSystemBars$default (Landroidx/activity/ComponentActivity;IIILjava/lang/Object;)V
-}
-
-public final class io/github/damson/hardwareinsets/HardwareInsetsKt {
-	public static final fun clearOfTheHardware (Landroidx/compose/ui/Modifier;Lio/github/damson/hardwareinsets/ScreenEdge;Lio/github/damson/hardwareinsets/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/Modifier;
-	public static final fun cornerClearance (Ljava/util/List;Lio/github/damson/hardwareinsets/ScreenEdge;ZLandroidx/compose/runtime/Composer;II)Lkotlin/jvm/functions/Function1;
-	public static final fun cornerClearanceFor (Ljava/util/List;IIIIZZ)J
-	public static final fun hardwareInsets (Lio/github/damson/hardwareinsets/ScreenEdge;Lio/github/damson/hardwareinsets/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/foundation/layout/WindowInsets;
-}
-
-public final class io/github/damson/hardwareinsets/HardwarePolicy {
+public final class io/github/damson/hardwareinsets/domain/HardwarePolicy {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (ZZZ)V
@@ -57,8 +48,8 @@ public final class io/github/damson/hardwareinsets/HardwarePolicy {
 	public final fun component1 ()Z
 	public final fun component2 ()Z
 	public final fun component3 ()Z
-	public final fun copy (ZZZ)Lio/github/damson/hardwareinsets/HardwarePolicy;
-	public static synthetic fun copy$default (Lio/github/damson/hardwareinsets/HardwarePolicy;ZZZILjava/lang/Object;)Lio/github/damson/hardwareinsets/HardwarePolicy;
+	public final fun copy (ZZZ)Lio/github/damson/hardwareinsets/domain/HardwarePolicy;
+	public static synthetic fun copy$default (Lio/github/damson/hardwareinsets/domain/HardwarePolicy;ZZZILjava/lang/Object;)Lio/github/damson/hardwareinsets/domain/HardwarePolicy;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAreSystemBarsIncluded ()Z
 	public fun hashCode ()I
@@ -67,19 +58,31 @@ public final class io/github/damson/hardwareinsets/HardwarePolicy {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/damson/hardwareinsets/ScreenEdge : java/lang/Enum {
-	public static final field BOTTOM Lio/github/damson/hardwareinsets/ScreenEdge;
-	public static final field LEFT Lio/github/damson/hardwareinsets/ScreenEdge;
-	public static final field RIGHT Lio/github/damson/hardwareinsets/ScreenEdge;
-	public static final field TOP Lio/github/damson/hardwareinsets/ScreenEdge;
+public final class io/github/damson/hardwareinsets/domain/ScreenEdge : java/lang/Enum {
+	public static final field BOTTOM Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+	public static final field LEFT Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+	public static final field RIGHT Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+	public static final field TOP Lio/github/damson/hardwareinsets/domain/ScreenEdge;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public final fun getOpposite ()Lio/github/damson/hardwareinsets/ScreenEdge;
+	public final fun getOpposite ()Lio/github/damson/hardwareinsets/domain/ScreenEdge;
 	public final fun isHorizontalEdge ()Z
-	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/ScreenEdge;
-	public static fun values ()[Lio/github/damson/hardwareinsets/ScreenEdge;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+	public static fun values ()[Lio/github/damson/hardwareinsets/domain/ScreenEdge;
 }
 
-public final class io/github/damson/hardwareinsets/ScreenEdgeKt {
-	public static final fun onScreenAt (Lio/github/damson/hardwareinsets/ScreenEdge;I)Lio/github/damson/hardwareinsets/ScreenEdge;
+public final class io/github/damson/hardwareinsets/domain/ScreenEdgeKt {
+	public static final fun onScreenAt (Lio/github/damson/hardwareinsets/domain/ScreenEdge;I)Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+}
+
+public final class io/github/damson/hardwareinsets/platform/CutoutReportingKt {
+	public static final fun cutoutShape (Landroid/view/View;)Landroidx/compose/runtime/State;
+	public static final fun stopReportingCutoutShape (Landroid/view/View;)V
+}
+
+public final class io/github/damson/hardwareinsets/platform/EdgeToEdgeKt {
+	public static final fun drawBehindTheHardware (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lio/github/damson/hardwareinsets/domain/CutoutMode;)V
+	public static synthetic fun drawBehindTheHardware$default (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lio/github/damson/hardwareinsets/domain/CutoutMode;ILjava/lang/Object;)V
+	public static final fun hideTheSystemBars (Landroidx/activity/ComponentActivity;II)V
+	public static synthetic fun hideTheSystemBars$default (Landroidx/activity/ComponentActivity;IIILjava/lang/Object;)V
 }
 
