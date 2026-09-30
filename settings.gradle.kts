@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "compose-hardware-insets"
 
 include(":hardware-insets")
+include(":sample")

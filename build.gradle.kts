@@ -7,3 +7,8 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.binary.compatibility)
 }
+
+apiValidation {
+    // The sample is not part of the published surface.
+    ignoredProjects.add("sample")
+}
