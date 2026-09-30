@@ -58,14 +58,13 @@ class ArchitectureTest {
 
     @Test
     fun `Should keep framework objects out of the domain`() {
-        // Value types and constants may cross: Rect is a box of four ints and
-        // Surface.ROTATION_90 is the number the platform means by it. A View,
-        // a Window or an Activity may not, because holding one is what makes a
-        // thing need a device to test.
+        // A value type may cross, because Rect is a box of four ints and
+        // carrying one costs nothing. A View, a Window or an Activity may not,
+        // because holding one is what makes a thing need a device to test.
         assertNoImports(
             importedFrom = "android.",
             inLayer = DOMAIN,
-            except = { it == "android.graphics.Rect" || it == "android.view.Surface" },
+            except = { it == "android.graphics.Rect" },
         )
         assertNoImports(importedFrom = "androidx.core.view", inLayer = DOMAIN)
         assertNoImports(importedFrom = "androidx.activity", inLayer = DOMAIN)

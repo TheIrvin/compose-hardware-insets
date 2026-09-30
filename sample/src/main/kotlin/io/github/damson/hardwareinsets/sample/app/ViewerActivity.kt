@@ -1,6 +1,7 @@
 package io.github.damson.hardwareinsets.sample.app
 
 import android.content.Intent
+import android.hardware.display.DisplayManager
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
@@ -10,10 +11,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import io.github.damson.hardwareinsets.domain.CutoutShape
+import io.github.damson.hardwareinsets.domain.ScreenRotation
 import io.github.damson.hardwareinsets.platform.cutoutShape
+import io.github.damson.hardwareinsets.platform.screenRotation
 import io.github.damson.hardwareinsets.platform.drawBehindTheHardware
 import io.github.damson.hardwareinsets.platform.hideTheSystemBars
 import io.github.damson.hardwareinsets.platform.stopReportingCutoutShape
@@ -40,6 +44,10 @@ class ViewerActivity : ComponentActivity() {
     private lateinit var insetHost: View
     private lateinit var cutout: State<CutoutShape>
     private var options by mutableStateOf(ViewerOptions())
+    // This activity declares the orientation config changes itself, so it is
+    // not recreated when the device turns and nothing re-reads the rotation on
+    // its own. Held as state and refreshed where the change arrives.
+    private var rotation by mutableStateOf(ScreenRotation.NONE)
     private var isPlatePaleAtTheTop = true
     private var isPlatePaleAtTheBottom = true
 
@@ -51,10 +59,42 @@ class ViewerActivity : ComponentActivity() {
         // before the window is asked for anything, since two of them are window
         // attributes and the restored values are what the window should open on.
         options = viewerOptionsFrom(savedInstanceState)
+        rotation = readRotation()
         applyWindow(options)
         setContentView(buildContentView())
         cutout = insetHost.cutoutShape()
     }
+
+    // A configuration change is not enough on its own. Turning the device from
+    // one landscape to the other keeps the orientation, the size and the
+    // layout, so the Configuration can be identical and no callback arrives,
+    // while the rotation has gone from a quarter turn to three quarters and a
+    // side-anchored control belongs on the opposite edge. The display says so
+    // even when the configuration does not.
+    private val displayListener = object : DisplayManager.DisplayListener {
+        override fun onDisplayAdded(displayId: Int) = Unit
+
+        override fun onDisplayRemoved(displayId: Int) = Unit
+
+        override fun onDisplayChanged(displayId: Int) {
+            rotation = readRotation()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        rotation = readRotation()
+        getSystemService(DisplayManager::class.java)
+            ?.registerDisplayListener(displayListener, null)
+    }
+
+    override fun onStop() {
+        getSystemService(DisplayManager::class.java)?.unregisterDisplayListener(displayListener)
+        super.onStop()
+    }
+
+    private fun readRotation(): ScreenRotation =
+        ContextCompat.getDisplayOrDefault(this).screenRotation
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -149,6 +189,9 @@ class ViewerActivity : ComponentActivity() {
                         ViewerScreen(
                             cutout = cutout.value,
                             options = options,
+                            // Qualified: this sits inside ComposeView.apply,
+                            // where a bare rotation is the View's own Float.
+                            rotation = this@ViewerActivity.rotation,
                             onOptions = ::onOptions,
                             onBarsOver = ::onBarsOver,
                             onShare = ::onShare,

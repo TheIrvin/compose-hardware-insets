@@ -1,7 +1,5 @@
 package io.github.damson.hardwareinsets.domain
 
-import android.view.Surface
-
 /**
  * An edge content can be anchored to.
  *
@@ -37,27 +35,27 @@ enum class ScreenEdge {
 /**
  * Which edge of the screen a chosen edge of the device has become.
  *
- * @param rotation what `Display.getRotation()` last reported, which is one of
- *   the `Surface.ROTATION_*` constants and not a number of degrees.
+ * @param rotation how far the device is turned from its natural orientation,
+ *   which a caller reads off its own display with `Display.screenRotation`.
  * @return the screen edge this one has become. Always a horizontal edge, since
  *   a side only lays out along one.
  */
-fun ScreenEdge.onScreenAt(rotation: Int): ScreenEdge = when {
+fun ScreenEdge.onScreenAt(rotation: ScreenRotation): ScreenEdge = when {
     isHorizontalEdge -> this
     // Turned anticlockwise: the phone's bottom edge is on the right, so its
     // left edge is along the bottom of what the user sees.
-    rotation == Surface.ROTATION_90 -> if (this == ScreenEdge.LEFT) {
+    rotation == ScreenRotation.QUARTER -> if (this == ScreenEdge.LEFT) {
         ScreenEdge.BOTTOM
     } else {
         ScreenEdge.TOP
     }
-    rotation == Surface.ROTATION_270 -> if (this == ScreenEdge.LEFT) {
+    rotation == ScreenRotation.THREE_QUARTERS -> if (this == ScreenEdge.LEFT) {
         ScreenEdge.TOP
     } else {
         ScreenEdge.BOTTOM
     }
-    // The frame or two before the orientation lock lands. A horizontal edge
-    // rather than the side it still is, because a caller laying out along this
+    // Upright or upside down, where a side edge is still a side. A horizontal
+    // edge rather than the side it is, because a caller laying out along this
     // edge has to be given one it can lay out along.
     else -> ScreenEdge.BOTTOM
 }

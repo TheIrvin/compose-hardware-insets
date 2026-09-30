@@ -1,9 +1,9 @@
 package io.github.damson.hardwareinsets
 
-import android.view.Surface
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import io.github.damson.hardwareinsets.domain.ScreenEdge
+import io.github.damson.hardwareinsets.domain.ScreenRotation
 import io.github.damson.hardwareinsets.domain.onScreenAt
 
 /**
@@ -26,39 +26,34 @@ class ScreenEdgeTest {
 
     @Test
     fun `Should put the left edge along the bottom While turned anticlockwise`() {
-        assertThat(ScreenEdge.LEFT.onScreenAt(Surface.ROTATION_90))
+        assertThat(ScreenEdge.LEFT.onScreenAt(ScreenRotation.QUARTER))
             .isEqualTo(ScreenEdge.BOTTOM)
     }
 
     @Test
     fun `Should put the right edge along the top While turned anticlockwise`() {
-        assertThat(ScreenEdge.RIGHT.onScreenAt(Surface.ROTATION_90))
+        assertThat(ScreenEdge.RIGHT.onScreenAt(ScreenRotation.QUARTER))
             .isEqualTo(ScreenEdge.TOP)
     }
 
     @Test
     fun `Should swap the two While turned the other way`() {
-        assertThat(ScreenEdge.LEFT.onScreenAt(Surface.ROTATION_270))
+        assertThat(ScreenEdge.LEFT.onScreenAt(ScreenRotation.THREE_QUARTERS))
             .isEqualTo(ScreenEdge.TOP)
-        assertThat(ScreenEdge.RIGHT.onScreenAt(Surface.ROTATION_270))
+        assertThat(ScreenEdge.RIGHT.onScreenAt(ScreenRotation.THREE_QUARTERS))
             .isEqualTo(ScreenEdge.BOTTOM)
     }
 
     @Test
     fun `Should give a side a horizontal edge While the screen has not turned yet`() {
         // The frame or two before the lock lands; a rail here would flash up.
-        for (rotation in listOf(Surface.ROTATION_0, Surface.ROTATION_180)) {
+        for (rotation in listOf(ScreenRotation.NONE, ScreenRotation.HALF)) {
             assertThat(ScreenEdge.LEFT.onScreenAt(rotation).isHorizontalEdge).isTrue()
             assertThat(ScreenEdge.RIGHT.onScreenAt(rotation).isHorizontalEdge).isTrue()
         }
     }
 
     private companion object {
-        val ROTATIONS = listOf(
-            Surface.ROTATION_0,
-            Surface.ROTATION_90,
-            Surface.ROTATION_180,
-            Surface.ROTATION_270,
-        )
+        val ROTATIONS = ScreenRotation.entries
     }
 }

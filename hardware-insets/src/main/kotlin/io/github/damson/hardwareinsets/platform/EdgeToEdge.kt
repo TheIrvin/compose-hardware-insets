@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import io.github.damson.hardwareinsets.domain.BarBehavior
 import io.github.damson.hardwareinsets.domain.CutoutMode
 
 /**
@@ -66,10 +67,10 @@ fun ComponentActivity.drawBehindTheHardware(
  */
 fun ComponentActivity.hideTheSystemBars(
     types: Int = WindowInsetsCompat.Type.systemBars(),
-    behavior: Int = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE,
+    behavior: BarBehavior = BarBehavior.SHOW_TRANSIENT_ON_SWIPE,
 ) {
     WindowCompat.getInsetsController(window, window.decorView).apply {
-        systemBarsBehavior = behavior
+        systemBarsBehavior = behavior.toControllerBehavior()
         hide(types)
     }
 }
@@ -88,4 +89,11 @@ internal fun CutoutMode.toLayoutMode(): Int = when (this) {
     CutoutMode.SHORT_EDGES -> LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
     CutoutMode.DEFAULT -> LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT
     CutoutMode.NEVER -> LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER
+}
+
+/** What the controller calls each [BarBehavior]. */
+internal fun BarBehavior.toControllerBehavior(): Int = when (this) {
+    BarBehavior.SHOW_TRANSIENT_ON_SWIPE ->
+        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    BarBehavior.PLATFORM_DEFAULT -> WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
 }

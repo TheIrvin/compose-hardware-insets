@@ -6,6 +6,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import androidx.compose.ui.unit.IntSize
+import io.github.damson.hardwareinsets.domain.WindowCorner
 import io.github.damson.hardwareinsets.domain.cornerClearanceFor
 
 /**
@@ -129,10 +131,13 @@ class CornerClearanceTest {
         cutoutBounds = cutouts,
         controlWidth = CONTROL_WIDTH,
         sideInset = sideInset,
-        windowWidth = WINDOW_WIDTH,
-        windowHeight = WINDOW_HEIGHT,
-        isRtl = isRtl,
-        isAtTop = isAtTop,
+        windowSize = IntSize(WINDOW_WIDTH, WINDOW_HEIGHT),
+        corner = when {
+            isAtTop && isRtl -> WindowCorner.TOP_RIGHT
+            isAtTop -> WindowCorner.TOP_LEFT
+            isRtl -> WindowCorner.BOTTOM_RIGHT
+            else -> WindowCorner.BOTTOM_LEFT
+        },
     )
 
     private companion object {

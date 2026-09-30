@@ -4,8 +4,16 @@ public final class io/github/damson/hardwareinsets/HardwareInsetsKt {
 	public static final fun hardwareInsets (Lio/github/damson/hardwareinsets/domain/ScreenEdge;Lio/github/damson/hardwareinsets/domain/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/foundation/layout/WindowInsets;
 }
 
+public final class io/github/damson/hardwareinsets/domain/BarBehavior : java/lang/Enum {
+	public static final field PLATFORM_DEFAULT Lio/github/damson/hardwareinsets/domain/BarBehavior;
+	public static final field SHOW_TRANSIENT_ON_SWIPE Lio/github/damson/hardwareinsets/domain/BarBehavior;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/BarBehavior;
+	public static fun values ()[Lio/github/damson/hardwareinsets/domain/BarBehavior;
+}
+
 public final class io/github/damson/hardwareinsets/domain/CornerClearanceKt {
-	public static final fun cornerClearanceFor (Ljava/util/List;IIIIZZ)J
+	public static final fun cornerClearanceFor-TdoYBX4 (Ljava/util/List;IIJLio/github/damson/hardwareinsets/domain/WindowCorner;)J
 }
 
 public final class io/github/damson/hardwareinsets/domain/CutoutMode : java/lang/Enum {
@@ -71,7 +79,27 @@ public final class io/github/damson/hardwareinsets/domain/ScreenEdge : java/lang
 }
 
 public final class io/github/damson/hardwareinsets/domain/ScreenEdgeKt {
-	public static final fun onScreenAt (Lio/github/damson/hardwareinsets/domain/ScreenEdge;I)Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+	public static final fun onScreenAt (Lio/github/damson/hardwareinsets/domain/ScreenEdge;Lio/github/damson/hardwareinsets/domain/ScreenRotation;)Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+}
+
+public final class io/github/damson/hardwareinsets/domain/ScreenRotation : java/lang/Enum {
+	public static final field HALF Lio/github/damson/hardwareinsets/domain/ScreenRotation;
+	public static final field NONE Lio/github/damson/hardwareinsets/domain/ScreenRotation;
+	public static final field QUARTER Lio/github/damson/hardwareinsets/domain/ScreenRotation;
+	public static final field THREE_QUARTERS Lio/github/damson/hardwareinsets/domain/ScreenRotation;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/ScreenRotation;
+	public static fun values ()[Lio/github/damson/hardwareinsets/domain/ScreenRotation;
+}
+
+public final class io/github/damson/hardwareinsets/domain/WindowCorner : java/lang/Enum {
+	public static final field BOTTOM_LEFT Lio/github/damson/hardwareinsets/domain/WindowCorner;
+	public static final field BOTTOM_RIGHT Lio/github/damson/hardwareinsets/domain/WindowCorner;
+	public static final field TOP_LEFT Lio/github/damson/hardwareinsets/domain/WindowCorner;
+	public static final field TOP_RIGHT Lio/github/damson/hardwareinsets/domain/WindowCorner;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/WindowCorner;
+	public static fun values ()[Lio/github/damson/hardwareinsets/domain/WindowCorner;
 }
 
 public final class io/github/damson/hardwareinsets/platform/CutoutReportingKt {
@@ -82,7 +110,11 @@ public final class io/github/damson/hardwareinsets/platform/CutoutReportingKt {
 public final class io/github/damson/hardwareinsets/platform/EdgeToEdgeKt {
 	public static final fun drawBehindTheHardware (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lio/github/damson/hardwareinsets/domain/CutoutMode;)V
 	public static synthetic fun drawBehindTheHardware$default (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lio/github/damson/hardwareinsets/domain/CutoutMode;ILjava/lang/Object;)V
-	public static final fun hideTheSystemBars (Landroidx/activity/ComponentActivity;II)V
-	public static synthetic fun hideTheSystemBars$default (Landroidx/activity/ComponentActivity;IIILjava/lang/Object;)V
+	public static final fun hideTheSystemBars (Landroidx/activity/ComponentActivity;ILio/github/damson/hardwareinsets/domain/BarBehavior;)V
+	public static synthetic fun hideTheSystemBars$default (Landroidx/activity/ComponentActivity;ILio/github/damson/hardwareinsets/domain/BarBehavior;ILjava/lang/Object;)V
+}
+
+public final class io/github/damson/hardwareinsets/platform/ScreenRotationsKt {
+	public static final fun getScreenRotation (Landroid/view/Display;)Lio/github/damson/hardwareinsets/domain/ScreenRotation;
 }
 

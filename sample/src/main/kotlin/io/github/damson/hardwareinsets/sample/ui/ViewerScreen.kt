@@ -30,10 +30,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import io.github.damson.hardwareinsets.domain.CutoutShape
 import io.github.damson.hardwareinsets.domain.ScreenEdge
+import io.github.damson.hardwareinsets.domain.ScreenRotation
 import io.github.damson.hardwareinsets.domain.onScreenAt
 import io.github.damson.hardwareinsets.sample.R
 import io.github.damson.hardwareinsets.sample.model.Plates
@@ -50,6 +50,9 @@ import kotlinx.coroutines.launch
  *
  * @param cutout the live shape from the activity's sibling view. Passed in
  *   rather than read here, so this stays a function of its input.
+ * @param rotation where the display is turned to now, watched by the activity
+ *   for the same reason. A landscape flip fires no configuration change, so a
+ *   screen that read this once would go on laying out for the old one.
  * @param onBarsOver called with how pale the plate now showing is at the top
  *   and at the bottom. The system bars draw their icons over it, and with a
  *   transparent bar the platform has no idea what is underneath.
@@ -62,6 +65,7 @@ import kotlinx.coroutines.launch
 fun ViewerScreen(
     cutout: CutoutShape,
     options: ViewerOptions,
+    rotation: ScreenRotation,
     onOptions: (ViewerOptions) -> Unit,
     onBarsOver: (isPaleAtTheTop: Boolean, isPaleAtTheBottom: Boolean) -> Unit,
     onShare: (String) -> Unit,
@@ -80,7 +84,6 @@ fun ViewerScreen(
     // cannot use one directly: it has to ask which screen edge the device has
     // turned that one into. Skipping this is what makes a side-anchored control
     // land on top of the status bar.
-    val rotation = LocalView.current.display?.rotation ?: 0
     val edge = options.anchor.onScreenAt(rotation)
     val pager = rememberPagerState(pageCount = { Plates.size })
     val plate = Plates[pager.currentPage]
