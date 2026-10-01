@@ -21,8 +21,16 @@ per edge, which are the two different answers this library exists to keep apart.
 gallery runs over one kind of hardware after another.
 
 ```kotlin
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        maven("https://jitpack.io")
+    }
+}
+
+// build.gradle.kts
 dependencies {
-    implementation("io.github.damson:hardware-insets:0.1.0")
+    implementation("com.github.damson.compose-hardware-insets:hardware-insets:0.1.0")
 }
 ```
 

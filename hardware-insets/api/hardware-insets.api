@@ -1,32 +1,32 @@
-public final class io/github/damson/hardwareinsets/HardwareInsetsKt {
-	public static final fun clearOfTheHardware (Landroidx/compose/ui/Modifier;Lio/github/damson/hardwareinsets/domain/ScreenEdge;Lio/github/damson/hardwareinsets/domain/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/Modifier;
-	public static final fun cornerClearance (Ljava/util/List;Lio/github/damson/hardwareinsets/domain/ScreenEdge;ZLandroidx/compose/runtime/Composer;II)Lkotlin/jvm/functions/Function1;
-	public static final fun hardwareInsets (Lio/github/damson/hardwareinsets/domain/ScreenEdge;Lio/github/damson/hardwareinsets/domain/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/foundation/layout/WindowInsets;
+public final class com/devddagnet/hardwareinsets/lib/HardwareInsetsKt {
+	public static final fun clearOfTheHardware (Landroidx/compose/ui/Modifier;Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;Lcom/devddagnet/hardwareinsets/lib/domain/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/ui/Modifier;
+	public static final fun cornerClearance (Ljava/util/List;Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;ZLandroidx/compose/runtime/Composer;II)Lkotlin/jvm/functions/Function1;
+	public static final fun hardwareInsets (Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;Lcom/devddagnet/hardwareinsets/lib/domain/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/foundation/layout/WindowInsets;
 }
 
-public final class io/github/damson/hardwareinsets/domain/BarBehavior : java/lang/Enum {
-	public static final field PLATFORM_DEFAULT Lio/github/damson/hardwareinsets/domain/BarBehavior;
-	public static final field SHOW_TRANSIENT_ON_SWIPE Lio/github/damson/hardwareinsets/domain/BarBehavior;
+public final class com/devddagnet/hardwareinsets/lib/domain/BarBehavior : java/lang/Enum {
+	public static final field PLATFORM_DEFAULT Lcom/devddagnet/hardwareinsets/lib/domain/BarBehavior;
+	public static final field SHOW_TRANSIENT_ON_SWIPE Lcom/devddagnet/hardwareinsets/lib/domain/BarBehavior;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/BarBehavior;
-	public static fun values ()[Lio/github/damson/hardwareinsets/domain/BarBehavior;
+	public static fun valueOf (Ljava/lang/String;)Lcom/devddagnet/hardwareinsets/lib/domain/BarBehavior;
+	public static fun values ()[Lcom/devddagnet/hardwareinsets/lib/domain/BarBehavior;
 }
 
-public final class io/github/damson/hardwareinsets/domain/CornerClearanceKt {
-	public static final fun cornerClearanceFor-TdoYBX4 (Ljava/util/List;IIJLio/github/damson/hardwareinsets/domain/WindowCorner;)J
+public final class com/devddagnet/hardwareinsets/lib/domain/CornerClearanceKt {
+	public static final fun cornerClearanceFor-TdoYBX4 (Ljava/util/List;IIJLcom/devddagnet/hardwareinsets/lib/domain/WindowCorner;)J
 }
 
-public final class io/github/damson/hardwareinsets/domain/CutoutMode : java/lang/Enum {
-	public static final field ALWAYS Lio/github/damson/hardwareinsets/domain/CutoutMode;
-	public static final field DEFAULT Lio/github/damson/hardwareinsets/domain/CutoutMode;
-	public static final field NEVER Lio/github/damson/hardwareinsets/domain/CutoutMode;
-	public static final field SHORT_EDGES Lio/github/damson/hardwareinsets/domain/CutoutMode;
+public final class com/devddagnet/hardwareinsets/lib/domain/CutoutMode : java/lang/Enum {
+	public static final field ALWAYS Lcom/devddagnet/hardwareinsets/lib/domain/CutoutMode;
+	public static final field DEFAULT Lcom/devddagnet/hardwareinsets/lib/domain/CutoutMode;
+	public static final field NEVER Lcom/devddagnet/hardwareinsets/lib/domain/CutoutMode;
+	public static final field SHORT_EDGES Lcom/devddagnet/hardwareinsets/lib/domain/CutoutMode;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/CutoutMode;
-	public static fun values ()[Lio/github/damson/hardwareinsets/domain/CutoutMode;
+	public static fun valueOf (Ljava/lang/String;)Lcom/devddagnet/hardwareinsets/lib/domain/CutoutMode;
+	public static fun values ()[Lcom/devddagnet/hardwareinsets/lib/domain/CutoutMode;
 }
 
-public final class io/github/damson/hardwareinsets/domain/CutoutShape {
+public final class com/devddagnet/hardwareinsets/lib/domain/CutoutShape {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (Ljava/util/List;IIII)V
@@ -36,8 +36,8 @@ public final class io/github/damson/hardwareinsets/domain/CutoutShape {
 	public final fun component3 ()I
 	public final fun component4 ()I
 	public final fun component5 ()I
-	public final fun copy (Ljava/util/List;IIII)Lio/github/damson/hardwareinsets/domain/CutoutShape;
-	public static synthetic fun copy$default (Lio/github/damson/hardwareinsets/domain/CutoutShape;Ljava/util/List;IIIIILjava/lang/Object;)Lio/github/damson/hardwareinsets/domain/CutoutShape;
+	public final fun copy (Ljava/util/List;IIII)Lcom/devddagnet/hardwareinsets/lib/domain/CutoutShape;
+	public static synthetic fun copy$default (Lcom/devddagnet/hardwareinsets/lib/domain/CutoutShape;Ljava/util/List;IIIIILjava/lang/Object;)Lcom/devddagnet/hardwareinsets/lib/domain/CutoutShape;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBottomInset ()I
 	public final fun getBounds ()Ljava/util/List;
@@ -48,7 +48,7 @@ public final class io/github/damson/hardwareinsets/domain/CutoutShape {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/damson/hardwareinsets/domain/HardwarePolicy {
+public final class com/devddagnet/hardwareinsets/lib/domain/HardwarePolicy {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (ZZZ)V
@@ -56,8 +56,8 @@ public final class io/github/damson/hardwareinsets/domain/HardwarePolicy {
 	public final fun component1 ()Z
 	public final fun component2 ()Z
 	public final fun component3 ()Z
-	public final fun copy (ZZZ)Lio/github/damson/hardwareinsets/domain/HardwarePolicy;
-	public static synthetic fun copy$default (Lio/github/damson/hardwareinsets/domain/HardwarePolicy;ZZZILjava/lang/Object;)Lio/github/damson/hardwareinsets/domain/HardwarePolicy;
+	public final fun copy (ZZZ)Lcom/devddagnet/hardwareinsets/lib/domain/HardwarePolicy;
+	public static synthetic fun copy$default (Lcom/devddagnet/hardwareinsets/lib/domain/HardwarePolicy;ZZZILjava/lang/Object;)Lcom/devddagnet/hardwareinsets/lib/domain/HardwarePolicy;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAreSystemBarsIncluded ()Z
 	public fun hashCode ()I
@@ -66,55 +66,55 @@ public final class io/github/damson/hardwareinsets/domain/HardwarePolicy {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/github/damson/hardwareinsets/domain/ScreenEdge : java/lang/Enum {
-	public static final field BOTTOM Lio/github/damson/hardwareinsets/domain/ScreenEdge;
-	public static final field LEFT Lio/github/damson/hardwareinsets/domain/ScreenEdge;
-	public static final field RIGHT Lio/github/damson/hardwareinsets/domain/ScreenEdge;
-	public static final field TOP Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+public final class com/devddagnet/hardwareinsets/lib/domain/ScreenEdge : java/lang/Enum {
+	public static final field BOTTOM Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;
+	public static final field LEFT Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;
+	public static final field RIGHT Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;
+	public static final field TOP Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public final fun getOpposite ()Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+	public final fun getOpposite ()Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;
 	public final fun isHorizontalEdge ()Z
-	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/ScreenEdge;
-	public static fun values ()[Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+	public static fun valueOf (Ljava/lang/String;)Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;
+	public static fun values ()[Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;
 }
 
-public final class io/github/damson/hardwareinsets/domain/ScreenEdgeKt {
-	public static final fun onScreenAt (Lio/github/damson/hardwareinsets/domain/ScreenEdge;Lio/github/damson/hardwareinsets/domain/ScreenRotation;)Lio/github/damson/hardwareinsets/domain/ScreenEdge;
+public final class com/devddagnet/hardwareinsets/lib/domain/ScreenEdgeKt {
+	public static final fun onScreenAt (Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;Lcom/devddagnet/hardwareinsets/lib/domain/ScreenRotation;)Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;
 }
 
-public final class io/github/damson/hardwareinsets/domain/ScreenRotation : java/lang/Enum {
-	public static final field HALF Lio/github/damson/hardwareinsets/domain/ScreenRotation;
-	public static final field NONE Lio/github/damson/hardwareinsets/domain/ScreenRotation;
-	public static final field QUARTER Lio/github/damson/hardwareinsets/domain/ScreenRotation;
-	public static final field THREE_QUARTERS Lio/github/damson/hardwareinsets/domain/ScreenRotation;
+public final class com/devddagnet/hardwareinsets/lib/domain/ScreenRotation : java/lang/Enum {
+	public static final field HALF Lcom/devddagnet/hardwareinsets/lib/domain/ScreenRotation;
+	public static final field NONE Lcom/devddagnet/hardwareinsets/lib/domain/ScreenRotation;
+	public static final field QUARTER Lcom/devddagnet/hardwareinsets/lib/domain/ScreenRotation;
+	public static final field THREE_QUARTERS Lcom/devddagnet/hardwareinsets/lib/domain/ScreenRotation;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/ScreenRotation;
-	public static fun values ()[Lio/github/damson/hardwareinsets/domain/ScreenRotation;
+	public static fun valueOf (Ljava/lang/String;)Lcom/devddagnet/hardwareinsets/lib/domain/ScreenRotation;
+	public static fun values ()[Lcom/devddagnet/hardwareinsets/lib/domain/ScreenRotation;
 }
 
-public final class io/github/damson/hardwareinsets/domain/WindowCorner : java/lang/Enum {
-	public static final field BOTTOM_LEFT Lio/github/damson/hardwareinsets/domain/WindowCorner;
-	public static final field BOTTOM_RIGHT Lio/github/damson/hardwareinsets/domain/WindowCorner;
-	public static final field TOP_LEFT Lio/github/damson/hardwareinsets/domain/WindowCorner;
-	public static final field TOP_RIGHT Lio/github/damson/hardwareinsets/domain/WindowCorner;
+public final class com/devddagnet/hardwareinsets/lib/domain/WindowCorner : java/lang/Enum {
+	public static final field BOTTOM_LEFT Lcom/devddagnet/hardwareinsets/lib/domain/WindowCorner;
+	public static final field BOTTOM_RIGHT Lcom/devddagnet/hardwareinsets/lib/domain/WindowCorner;
+	public static final field TOP_LEFT Lcom/devddagnet/hardwareinsets/lib/domain/WindowCorner;
+	public static final field TOP_RIGHT Lcom/devddagnet/hardwareinsets/lib/domain/WindowCorner;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/github/damson/hardwareinsets/domain/WindowCorner;
-	public static fun values ()[Lio/github/damson/hardwareinsets/domain/WindowCorner;
+	public static fun valueOf (Ljava/lang/String;)Lcom/devddagnet/hardwareinsets/lib/domain/WindowCorner;
+	public static fun values ()[Lcom/devddagnet/hardwareinsets/lib/domain/WindowCorner;
 }
 
-public final class io/github/damson/hardwareinsets/platform/CutoutReportingKt {
+public final class com/devddagnet/hardwareinsets/lib/platform/CutoutReportingKt {
 	public static final fun cutoutShape (Landroid/view/View;)Landroidx/compose/runtime/State;
 	public static final fun stopReportingCutoutShape (Landroid/view/View;)V
 }
 
-public final class io/github/damson/hardwareinsets/platform/EdgeToEdgeKt {
-	public static final fun drawBehindTheHardware (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lio/github/damson/hardwareinsets/domain/CutoutMode;)V
-	public static synthetic fun drawBehindTheHardware$default (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lio/github/damson/hardwareinsets/domain/CutoutMode;ILjava/lang/Object;)V
-	public static final fun hideTheSystemBars (Landroidx/activity/ComponentActivity;ILio/github/damson/hardwareinsets/domain/BarBehavior;)V
-	public static synthetic fun hideTheSystemBars$default (Landroidx/activity/ComponentActivity;ILio/github/damson/hardwareinsets/domain/BarBehavior;ILjava/lang/Object;)V
+public final class com/devddagnet/hardwareinsets/lib/platform/EdgeToEdgeKt {
+	public static final fun drawBehindTheHardware (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lcom/devddagnet/hardwareinsets/lib/domain/CutoutMode;)V
+	public static synthetic fun drawBehindTheHardware$default (Landroidx/activity/ComponentActivity;Landroidx/activity/SystemBarStyle;Landroidx/activity/SystemBarStyle;Lcom/devddagnet/hardwareinsets/lib/domain/CutoutMode;ILjava/lang/Object;)V
+	public static final fun hideTheSystemBars (Landroidx/activity/ComponentActivity;ILcom/devddagnet/hardwareinsets/lib/domain/BarBehavior;)V
+	public static synthetic fun hideTheSystemBars$default (Landroidx/activity/ComponentActivity;ILcom/devddagnet/hardwareinsets/lib/domain/BarBehavior;ILjava/lang/Object;)V
 }
 
-public final class io/github/damson/hardwareinsets/platform/ScreenRotationsKt {
-	public static final fun getScreenRotation (Landroid/view/Display;)Lio/github/damson/hardwareinsets/domain/ScreenRotation;
+public final class com/devddagnet/hardwareinsets/lib/platform/ScreenRotationsKt {
+	public static final fun getScreenRotation (Landroid/view/Display;)Lcom/devddagnet/hardwareinsets/lib/domain/ScreenRotation;
 }
 

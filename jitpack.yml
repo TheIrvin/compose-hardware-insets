@@ -1,0 +1,7 @@
+# JitPack runs an old JDK by default and this build needs 21, which fails as a
+# Gradle toolchain error naming neither JitPack nor the version.
+jdk:
+  - openjdk21
+before_install:
+  - sdk install java 21.0.5-tem
+  - sdk use java 21.0.5-tem

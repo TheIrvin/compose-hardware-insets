@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.damson.hardwareinsets"
+    namespace = "com.devddagnet.hardwareinsets.lib"
     compileSdk = 36
 
     defaultConfig {
@@ -80,7 +80,7 @@ dependencies {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "io.github.damson"
+            groupId = "com.devddagnet"
             artifactId = "hardware-insets"
             version = "0.1.0"
             afterEvaluate { from(components["release"]) }

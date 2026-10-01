@@ -6,7 +6,8 @@
 > particular control. This answers that, and keeps the geometry pure so it can be tested against
 > hardware you do not own.
 
-Kotlin, Android, minSdk 23, Apache 2.0. Maven coordinates `io.github.damson:hardware-insets`.
+Kotlin, Android, minSdk 23, Apache 2.0. Published through JitPack as
+`com.github.damson.compose-hardware-insets:hardware-insets`.
 
 ## Public API
 

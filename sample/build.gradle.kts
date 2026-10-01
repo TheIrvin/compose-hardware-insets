@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "io.github.damson.hardwareinsets.sample"
+    namespace = "com.devddagnet.hardwareinsets.sample"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "io.github.damson.hardwareinsets.sample"
+        applicationId = "com.devddagnet.hardwareinsets.sample"
         minSdk = 23
         targetSdk = 36
         versionCode = 1
