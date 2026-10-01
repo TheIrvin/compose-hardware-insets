@@ -1,6 +1,9 @@
 /.gradle/
 /local.properties
 /.idea/
+# Session notes an agent writes beside the project. Untracked by default, which
+# one `git add -A` undoes, and this repository is public.
+/.claude/
 /.kotlin/
 *.iml
 .DS_Store
