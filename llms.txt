@@ -7,7 +7,7 @@
 > hardware you do not own.
 
 Kotlin, Android, minSdk 23, Apache 2.0. Published through JitPack as
-`com.github.damson.compose-hardware-insets:hardware-insets`.
+`com.github.damson:compose-hardware-insets`.
 
 ## Public API
 

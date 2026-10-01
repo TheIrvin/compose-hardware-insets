@@ -30,7 +30,7 @@ dependencyResolutionManagement {
 
 // build.gradle.kts
 dependencies {
-    implementation("com.github.damson.compose-hardware-insets:hardware-insets:0.1.0")
+    implementation("com.github.damson:compose-hardware-insets:0.1.0")
 }
 ```
 
