@@ -6,6 +6,7 @@ kotlin = "2.2.21"
 # AGP 8.x reads an internal API that Gradle 9.6 removed, so the wrapper stays
 # at 9.5 until AGP 9. See the wrapper properties.
 binaryCompatibility = "0.18.1"
+kover = "0.9.1"
 
 activity = "1.13.0"
 appcompat = "1.7.1"
@@ -43,5 +44,6 @@ robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectr
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 binary-compatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibility" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

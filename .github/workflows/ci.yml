@@ -41,6 +41,13 @@ jobs:
       - name: Tests and lint
         run: ./gradlew check --stacktrace
 
+      - name: Coverage
+        # Two gates in one task graph: the pure geometry at 100% line and branch,
+        # from the root build file, and the library overall at 90% line. Separate
+        # from `check` so a failure says which, and because a coverage drop and a
+        # failing test deserve different first reactions.
+        run: ./gradlew koverVerify :hardware-insets:koverVerify --stacktrace
+
       - name: Public API unchanged
         # Separate from `check` so a failure here is unambiguous: it means the
         # public surface moved and the dump was not regenerated.

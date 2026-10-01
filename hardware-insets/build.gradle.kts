@@ -1,5 +1,8 @@
+import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
+
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kover)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     `maven-publish`
@@ -75,6 +78,24 @@ dependencies {
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation(libs.androidx.compose.ui.test.manifest)
+}
+
+kover {
+    reports {
+        verify {
+            rule("The library overall") {
+                // 90 where it measures 97, which leaves room for the platform
+                // edges that need a real window and none for a slide. The gap is
+                // `platform` and the composable entry points, where the uncovered
+                // lines are the ones Robolectric cannot reach. The pure geometry is
+                // gated separately, at 100%, from the root build file.
+                bound {
+                    minValue = 90
+                    coverageUnits = CoverageUnit.LINE
+                }
+            }
+        }
+    }
 }
 
 publishing {
