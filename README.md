@@ -8,15 +8,17 @@ This answers that. It publishes the cutout's rectangles as Compose state, turns 
 for a control tucked into a corner, and keeps the pure geometry public so you can test it against
 hardware you do not own.
 
-| A curved edge | A camera in the corner | One kind after another |
-|---|---|---|
-| <img src="docs/media/sample-waterfall.png" width="240" alt="The sample on a phone with curved edges: the safe margins run down both sides in orange and every control sits inside them"> | <img src="docs/media/sample-corner.png" width="240" alt="The sample with a camera in the top right corner drawn in red, and the favourite and share buttons stepped down and clear of it"> | <img src="docs/media/sample.gif" width="240" alt="The same screen over one kind of hardware after another: punch holes in the middle and in a corner, a wide notch, a cutout at each end, and a curved edge with no cutout at all"> |
+| A curved edge | A camera in the corner | Marker options | One kind after another |
+|---|---|---|---|
+| <img src="docs/media/sample-waterfall.png" width="220" alt="The sample on a phone with curved edges: the safe margins run down both sides in orange and every control sits inside them"> | <img src="docs/media/sample-corner.png" width="220" alt="The sample with a camera in the top right corner drawn in red, and the favourite and share buttons stepped down and clear of it"> | <img src="docs/media/sample-settings.png" width="220" alt="The sample's control sheet, reading back a camera 126 by 126 pixels at 954,0 and a safe margin of 126 pixels on the top edge, above the switch that draws them over the picture"> | <img src="docs/media/sample.gif" width="220" alt="The same screen over one kind of hardware after another: punch holes in the middle and in a corner, a wide notch, a cutout at each end, and a curved edge with no cutout at all"> |
 
 The same screen on different hardware, with the sample's marker overlay on: red is where the platform
 says a camera is, orange is how far in it says to stay on each edge. On the left there is no rectangle
-at all, only a curved edge, and everything is inset by `clearOfTheHardware`. In the middle the corner
+at all, only a curved edge, and everything is inset by `clearOfTheHardware`. Beside it the corner
 buttons have been driven clear of the camera by `cornerClearance`, which counts only the rectangles
-they actually overlap. On the right the gallery runs over one kind of hardware after another.
+they actually overlap. The third reads the numbers back: a rectangle where the camera is, and a depth
+per edge, which are the two different answers this library exists to keep apart. On the right the
+gallery runs over one kind of hardware after another.
 
 ```kotlin
 dependencies {

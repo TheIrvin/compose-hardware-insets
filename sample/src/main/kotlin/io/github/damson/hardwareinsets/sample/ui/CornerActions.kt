@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import io.github.damson.hardwareinsets.domain.ScreenEdge
@@ -81,3 +82,29 @@ internal fun CornerActions(
 internal val ACTIONS_WIDTH = 112.dp
 
 internal val CORNER_PADDING = 16.dp
+
+@Preview(name = "Corner row")
+@Composable
+private fun CornerActionsPreview() = SamplePreview {
+    CornerActions(
+        moved = IntOffset.Zero,
+        edge = ScreenEdge.TOP,
+        options = ViewerOptions(),
+        isFavourite = false,
+        onFavourite = {},
+        onShare = {},
+    )
+}
+
+@Preview(name = "Corner row, favourited and stepped clear of a camera")
+@Composable
+private fun CornerActionsClearPreview() = SamplePreview {
+    CornerActions(
+        moved = IntOffset(x = 0, y = 126),
+        edge = ScreenEdge.TOP,
+        options = ViewerOptions(),
+        isFavourite = true,
+        onFavourite = {},
+        onShare = {},
+    )
+}

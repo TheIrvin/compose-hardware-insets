@@ -43,7 +43,15 @@ class ArchitectureTest {
         // generated rather than framework, and carrying an id is not the same
         // as touching a window.
         assertNoImports(importedFrom = "android.", inLayer = MODEL)
-        assertNoImports(importedFrom = "android.", inLayer = UI)
+        // `Rect` crosses into the ui for the same reason the library lets it
+        // cross into its own domain: it is a box of four ints. It is here so a
+        // preview can be laid out against a cutout the preview window does not
+        // have, which is the whole claim the library makes.
+        assertNoImports(
+            importedFrom = "android.",
+            inLayer = UI,
+            except = { it == "android.graphics.Rect" },
+        )
         assertNoImports(importedFrom = "androidx.activity", inLayer = MODEL)
         assertNoImports(importedFrom = "androidx.activity", inLayer = UI)
     }

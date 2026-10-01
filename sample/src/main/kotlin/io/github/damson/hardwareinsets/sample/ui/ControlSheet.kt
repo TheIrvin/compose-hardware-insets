@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.damson.hardwareinsets.domain.CutoutMode
 import io.github.damson.hardwareinsets.domain.CutoutShape
@@ -260,5 +261,25 @@ private fun Label(text: String) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.labelLarge,
         modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 4.dp),
+    )
+}
+
+@Preview(name = "Controls, over a camera in the corner", heightDp = 900)
+@Composable
+private fun ControlSheetPreview() = SamplePreview(alignment = Alignment.BottomStart) {
+    ControlSheetContent(
+        cutout = PreviewHardware.cameraInTheCorner,
+        options = ViewerOptions(),
+        onOptions = {},
+    )
+}
+
+@Preview(name = "Controls, on a phone with nothing in the way", heightDp = 900)
+@Composable
+private fun ControlSheetWithoutHardwarePreview() = SamplePreview(alignment = Alignment.BottomStart) {
+    ControlSheetContent(
+        cutout = PreviewHardware.none,
+        options = ViewerOptions(),
+        onOptions = {},
     )
 }

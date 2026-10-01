@@ -45,8 +45,8 @@
     <string name="legend_detail">Red is where this phone says its camera sits. Orange is how far in it says to stay on each edge.</string>
     <string name="no_cutout">This phone reports none</string>
 
-    <string name="markers">Show what the phone reports</string>
-    <string name="markers_detail">Draws the camera in red and the safe margins in orange, over the picture</string>
+    <string name="markers">Show the camera and safe margins</string>
+    <string name="markers_detail">Draws them over the picture: red for the camera, orange for the margins</string>
 
     <string name="anchor">Which edge the label sits on</string>
     <string name="anchor_detail">Left and Right are edges of the phone rather than of the screen, so they move when you turn it</string>

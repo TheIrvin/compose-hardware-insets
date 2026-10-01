@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,7 @@ import io.github.damson.hardwareinsets.domain.ScreenEdge
 import io.github.damson.hardwareinsets.hardwareInsets
 import io.github.damson.hardwareinsets.sample.R
 import io.github.damson.hardwareinsets.sample.model.Plate
+import io.github.damson.hardwareinsets.sample.model.Plates
 import io.github.damson.hardwareinsets.sample.model.ViewerOptions
 import kotlin.math.roundToInt
 
@@ -227,3 +229,59 @@ internal fun rememberLabelShake(shakes: Int): Float {
 }
 
 private const val SHAKE_MILLIS = 420
+
+@Preview(name = "Label, anchored to the top", widthDp = 400)
+@Composable
+private fun WallLabelPreview() = SamplePreview(alignment = Alignment.TopStart) {
+    WallLabel(
+        plate = Plates.first(),
+        number = 1,
+        total = Plates.size,
+        edge = ScreenEdge.TOP,
+        options = ViewerOptions(),
+        shake = 0f,
+        rowMoved = 0.dp,
+    )
+}
+
+@Preview(name = "Label, anchored to the bottom", widthDp = 400)
+@Composable
+private fun WallLabelAtTheBottomPreview() = SamplePreview(alignment = Alignment.BottomStart) {
+    WallLabel(
+        plate = Plates.first(),
+        number = 1,
+        total = Plates.size,
+        edge = ScreenEdge.BOTTOM,
+        options = ViewerOptions(anchor = ScreenEdge.BOTTOM),
+        shake = 0f,
+        rowMoved = 0.dp,
+    )
+}
+
+@Preview(name = "Label, leaving room for a corner row on hardware", widthDp = 400)
+@Composable
+private fun WallLabelBesideTheCornerPreview() = SamplePreview(alignment = Alignment.TopStart) {
+    WallLabel(
+        plate = Plates.first(),
+        number = 1,
+        total = Plates.size,
+        edge = ScreenEdge.TOP,
+        options = ViewerOptions(),
+        shake = 0f,
+        rowMoved = 126.dp,
+    )
+}
+
+@Preview(name = "Label, mid shake", widthDp = 400)
+@Composable
+private fun WallLabelShakingPreview() = SamplePreview(alignment = Alignment.TopStart) {
+    WallLabel(
+        plate = Plates.first(),
+        number = 1,
+        total = Plates.size,
+        edge = ScreenEdge.TOP,
+        options = ViewerOptions(),
+        shake = -1f,
+        rowMoved = 0.dp,
+    )
+}

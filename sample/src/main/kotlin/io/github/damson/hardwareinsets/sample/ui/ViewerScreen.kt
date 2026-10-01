@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import io.github.damson.hardwareinsets.domain.CutoutShape
 import io.github.damson.hardwareinsets.domain.ScreenEdge
 import io.github.damson.hardwareinsets.domain.ScreenRotation
@@ -233,3 +234,63 @@ private val FavouritesSaver = listSaver<Set<Int>, Int>(
     save = { it.toList() },
     restore = { it.toSet() },
 )
+
+/**
+ * The whole screen against hardware the preview does not have.
+ *
+ * A preview window reports no cutout, so the marker overlay would be empty and
+ * `cornerClearance` would have nothing to move for. Handing the shape in as a
+ * value is what makes the three below different from each other, and it is the
+ * same move a test makes: see `CornerOffsetTest`.
+ */
+@Preview(name = "A camera in the corner", showSystemUi = true)
+@Composable
+private fun ViewerScreenPreview() = SampleTheme {
+    ViewerScreen(
+        cutout = PreviewHardware.cameraInTheCorner,
+        options = ViewerOptions(),
+        rotation = ScreenRotation.NONE,
+        onOptions = {},
+        onBarsOver = { _, _ -> },
+        onShare = {},
+    )
+}
+
+@Preview(name = "A punch-hole in the middle", showSystemUi = true)
+@Composable
+private fun ViewerScreenCentredHolePreview() = SampleTheme {
+    ViewerScreen(
+        cutout = PreviewHardware.centredPunchHole,
+        options = ViewerOptions(),
+        rotation = ScreenRotation.NONE,
+        onOptions = {},
+        onBarsOver = { _, _ -> },
+        onShare = {},
+    )
+}
+
+@Preview(name = "Curved edges, no camera", showSystemUi = true)
+@Composable
+private fun ViewerScreenCurvedPreview() = SampleTheme {
+    ViewerScreen(
+        cutout = PreviewHardware.curvedEdges,
+        options = ViewerOptions(anchor = ScreenEdge.BOTTOM),
+        rotation = ScreenRotation.NONE,
+        onOptions = {},
+        onBarsOver = { _, _ -> },
+        onShare = {},
+    )
+}
+
+@Preview(name = "Nothing in the way", showSystemUi = true)
+@Composable
+private fun ViewerScreenWithoutHardwarePreview() = SampleTheme {
+    ViewerScreen(
+        cutout = PreviewHardware.none,
+        options = ViewerOptions(areMarkersShown = false),
+        rotation = ScreenRotation.NONE,
+        onOptions = {},
+        onBarsOver = { _, _ -> },
+        onShare = {},
+    )
+}
