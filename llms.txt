@@ -6,15 +6,23 @@
 > particular control. This answers that, and keeps the geometry pure so it can be tested against
 > hardware you do not own.
 
-Kotlin, Android, minSdk 23, Apache 2.0. Maven coordinates `io.github.damson:hardware-insets`.
+Kotlin, Android, minSdk 23, Apache 2.0. Published through JitPack as
+`com.github.damson.compose-hardware-insets:hardware-insets`.
 
 ## Public API
 
 - `ScreenEdge`: `TOP`, `BOTTOM`, `LEFT`, `RIGHT`. `TOP` and `BOTTOM` are edges of the screen and
   never move; `LEFT` and `RIGHT` are edges of the device held upright. `isHorizontalEdge`,
   `opposite`. Treat the constant names as a stored format if you persist one.
-- `ScreenEdge.onScreenAt(rotation: Int)`: which screen edge a device edge has become. `rotation` is
-  a `Surface.ROTATION_*` constant, not degrees. Always returns a horizontal edge.
+- `ScreenEdge.onScreenAt(rotation: ScreenRotation)`: which screen edge a device edge has become.
+  Always returns a horizontal edge.
+- `ScreenRotation`: `NONE`, `QUARTER`, `HALF`, `THREE_QUARTERS`. Named rather than an `Int`, because
+  `Configuration.ORIENTATION_LANDSCAPE` is 2 and so is `Surface.ROTATION_180`. Read one off a
+  display with `Display.screenRotation`.
+- `WindowCorner`: `TOP_LEFT`, `TOP_RIGHT`, `BOTTOM_LEFT`, `BOTTOM_RIGHT`. Which corner a control is
+  tucked into.
+- `BarBehavior`: `SHOW_TRANSIENT_ON_SWIPE`, `PLATFORM_DEFAULT`. What a hidden bar does when reached
+  for.
 - `CutoutShape(bounds: List<Rect>, topInset, bottomInset, leftInset, rightInset)`: `bounds` is where
   the cameras are, in pixels, in window coordinates. Empty below API 28 and on hardware with no
   cutout.
@@ -29,13 +37,13 @@ Kotlin, Android, minSdk 23, Apache 2.0. Maven coordinates `io.github.damson:hard
   background keeps its full size and only what is inside it moves.
 - `cornerClearance(cutoutBounds: List<Rect>, position: ScreenEdge = TOP, isAtTheEnd: Boolean = false): (controlWidth: Int) -> IntOffset`:
   horizontal edges only; returns a function answering `IntOffset.Zero` on `LEFT` or `RIGHT`.
-- `cornerClearanceFor(cutoutBounds, controlWidth, sideInset, windowWidth, windowHeight, isRtl, isAtTop): IntOffset`:
+- `cornerClearanceFor(cutoutBounds, controlWidth, sideInset, windowSize, corner): IntOffset`:
   the pure geometry, public so a caller can ask it directly and test it.
 - `CutoutMode`: `ALWAYS` (falls back to `SHORT_EDGES` below API 30), `SHORT_EDGES`, `DEFAULT`,
   `NEVER`.
 - `ComponentActivity.drawBehindTheHardware(statusBarStyle: SystemBarStyle? = null, navigationBarStyle: SystemBarStyle? = null, cutoutMode: CutoutMode = ALWAYS)`:
   null styles keep whatever `enableEdgeToEdge` picks. `cutoutMode` is ignored below API 28.
-- `ComponentActivity.hideTheSystemBars(types: Int = WindowInsetsCompat.Type.systemBars(), behavior: Int = BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)`
+- `ComponentActivity.hideTheSystemBars(types: Int = WindowInsetsCompat.Type.systemBars(), behavior: BarBehavior = BarBehavior.SHOW_TRANSIENT_ON_SWIPE)`
 
 ## Traps a caller hits
 

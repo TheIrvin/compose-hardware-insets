@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- No action bar, because the plate runs to every edge and the library is
+         what keeps the label off the hardware. The bar icons start dark because
+         the first plate is pale at the top; from then on the activity sets them
+         per plate, since the plates do not follow the system theme. -->
+    <style name="Theme.Sample" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

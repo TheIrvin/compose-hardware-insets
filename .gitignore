@@ -1,9 +1,13 @@
 /.gradle/
-/build/
 /local.properties
 /.idea/
 /.kotlin/
 *.iml
 .DS_Store
 
-/hardware-insets/build/
+# One line per depth rather than a bare `build/`. Anchoring to the root alone is
+# what let 54MB of the sample's build output into this repo: `/build/` matches
+# the root project's directory and nothing else, so every module added later is
+# tracked by default.
+/build/
+*/build/

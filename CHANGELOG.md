@@ -7,7 +7,7 @@ may change in any 0.x release.
 
 ## [Unreleased]
 
-## [0.1.0]
+## [0.1.0] - 2026-10-01
 
 First release. Extracted from a production app and generalised, so every decision that was that
 app's rather than the platform's is now a parameter.

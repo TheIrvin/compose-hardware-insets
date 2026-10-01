@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.damson.hardwareinsets"
+    namespace = "com.devddagnet.hardwareinsets.lib"
     compileSdk = 36
 
     defaultConfig {
@@ -80,10 +80,43 @@ dependencies {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "io.github.damson"
+            groupId = "com.devddagnet"
             artifactId = "hardware-insets"
             version = "0.1.0"
             afterEvaluate { from(components["release"]) }
+
+            // Without this block the POM carries coordinates and dependencies
+            // and nothing else, so a consumer's licence report lists this
+            // artifact as unknown rather than as Apache 2.0, and Maven Central
+            // rejects it outright. It is also the only place a resolved
+            // artifact can say where it came from.
+            pom {
+                name.set("compose-hardware-insets")
+                description.set(
+                    "Display cutout rectangles as Compose state, and the geometry to keep a " +
+                        "control clear of the hardware that overlaps it.",
+                )
+                url.set("https://github.com/damson/compose-hardware-insets")
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("damson")
+                        url.set("https://github.com/damson")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/damson/compose-hardware-insets")
+                    connection.set("scm:git:https://github.com/damson/compose-hardware-insets.git")
+                    developerConnection.set(
+                        "scm:git:ssh://git@github.com/damson/compose-hardware-insets.git",
+                    )
+                }
+            }
         }
     }
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hardware insets</string>
+    <string name="add_to_favourites">Add to favourites</string>
+    <string name="remove_from_favourites">Remove from favourites</string>
+    <string name="share">Share</string>
+    <string name="previous_plate">Previous plate</string>
+    <string name="next_plate">Next plate</string>
+    <string name="share_repo">compose-hardware-insets: a small Compose library that keeps your UI clear of the camera cutout and the curved edge, and hands you the cutout rectangles Compose will not. https://github.com/damson/compose-hardware-insets</string>
+    <string name="controls">Controls</string>
+    <string name="open_controls">Open the controls</string>
+    <string name="hide_the_label">Hide the label</string>
+    <string name="show_the_label">Show the label</string>
+
+    <!-- The wall label. Every work in the gallery is painted by the sample
+         itself, so one maker line serves all of them. -->
+    <string name="plate_rail">Plate %1$d of %2$d, swipe to change</string>
+    <string name="plate_maker">Hardware Insets sample, 2026</string>
+    <string name="anchored_to">Anchored to %1$s</string>
+    <string name="anchored_to_now">Anchored to %1$s, now %2$s</string>
+
+    <string name="plate_tide_title">Low Tide</string>
+    <string name="plate_tide_medium">Vertical ramp, cut once at the horizon</string>
+    <string name="plate_tide_description">A pale sky and a low sun over deep water, cut by a bright horizon with tide lines crowding beneath it.</string>
+
+    <string name="plate_head_title">Head, Counted</string>
+    <string name="plate_head_medium">Mask, teeth and a halo of marks</string>
+    <string name="plate_head_description">A skull drawn in one white line over a dark ground, both eyes crossed through, seven teeth counted in a box, and a halo of yellow strokes above it.</string>
+
+    <string name="plate_ledger_title">Ledger of Metals</string>
+    <string name="plate_ledger_medium">A list, every entry struck out</string>
+    <string name="plate_ledger_description">A boxed list of metals on pale paper, each one struck through, a tally counted beside it, two arrows and a crown drawn in ink.</string>
+
+    <string name="plate_arms_title">Arms Raised</string>
+    <string name="plate_arms_medium">Figure on a banded ground, one word three times</string>
+    <string name="plate_arms_description">A stick figure with both arms up, standing on broad bands of blue and black, the word GO written three times beside it with the last struck out, and a boxed cross below.</string>
+
+    <string name="plate_crown_title">Crown, Crossed Out</string>
+    <string name="plate_crown_medium">Crown, ribs and words struck through</string>
+    <string name="plate_crown_description">A yellow three-point crown over a worked dark ground, with block words struck out, a ribcage drawn in white, and blocks of blue and yellow.</string>
+
+    <string name="controls_intro">This library keeps the label and the buttons off the camera. Change what counts as being in the way, and watch them move.</string>
+    <string name="legend_rects">Camera</string>
+    <string name="legend_depths">Safe margins</string>
+    <string name="legend_detail">Red is where this phone says its camera sits. Orange is how far in it says to stay on each edge.</string>
+    <string name="no_cutout">This phone reports none</string>
+
+    <string name="markers">Show the camera and safe margins</string>
+    <string name="markers_detail">Draws them over the picture: red for the camera, orange for the margins</string>
+
+    <string name="anchor">Which edge the label sits on</string>
+    <string name="anchor_detail">Left and Right are edges of the phone rather than of the screen, so they move when you turn it</string>
+    <string name="corner">Which corner the buttons sit in</string>
+    <string name="corner_detail">Start is the left corner of that edge in a left-to-right language, and the right one in Arabic or Hebrew</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+
+    <string name="counts_as_hardware">What the label moves out of the way of</string>
+    <string name="cutout">The camera</string>
+    <string name="cutout_detail">The one thing that is physically in the screen. Android reports nothing here before version 9</string>
+    <string name="waterfall">The curved edge</string>
+    <string name="waterfall_detail">Where a phone curves down its sides. You can draw there, but a touch is unreliable</string>
+    <string name="system_bars">The clock and the gesture bar</string>
+    <string name="system_bars_detail">Software rather than hardware, so this is off unless you want it</string>
+    <string name="far_edge_ignored">Leave the opposite edge alone</string>
+    <string name="far_edge_detail">Stops the label growing on the far side, where its invisible box can swallow taps meant for the picture</string>
+
+    <string name="window">The window itself</string>
+    <string name="cutout_mode">How far the picture may go under the camera</string>
+    <string name="cutout_mode_detail">Always fills the whole screen, which is what a viewer wants. Never keeps the picture clear of the camera entirely</string>
+    <string name="hide_bars">Hide the clock and the gesture bar</string>
+    <string name="hide_bars_detail">Swipe in from an edge to bring them back</string>
+</resources>
