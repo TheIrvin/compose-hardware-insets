@@ -32,11 +32,8 @@ kover {
         // than of the configuration.
         total {
             filters {
-                excludes {
-                    classes(
-                        "com.devddagnet.hardwareinsets.lib.HardwareInsetsKt",
-                        "com.devddagnet.hardwareinsets.lib.platform.*",
-                    )
+                includes {
+                    classes("com.devddagnet.hardwareinsets.lib.domain.*")
                 }
             }
 
@@ -45,8 +42,17 @@ kover {
                     // Reached, not aspired to. Nothing in `domain` touches a
                     // framework object it cannot be handed, so these are exactly
                     // the functions the README argues you can test against hardware
-                    // you do not own. An uncovered branch here is the one kind this
-                    // project has no excuse for.
+                    // you do not own.
+                    //
+                    // The cost of the branch half, which is real: an inline stdlib
+                    // call brings its own branches into this package's count, so
+                    // two of the three this gate first closed were inside
+                    // `maxOfOrNull` rather than in code written here. The next
+                    // `sumOf` or `associate` in `domain` can add a branch
+                    // reachable only by input shaped to the standard library. When
+                    // that happens the honest fix is a test of the behaviour that
+                    // needs the shape, or a narrower bound, not a test written to
+                    // the counter.
                     bound {
                         minValue = 100
                         coverageUnits = CoverageUnit.LINE

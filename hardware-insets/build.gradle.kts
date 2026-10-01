@@ -93,6 +93,13 @@ kover {
                     minValue = 90
                     coverageUnits = CoverageUnit.LINE
                 }
+                // Branches too, or `platform` can take new conditional code at
+                // zero while the line bound stays satisfied. 85 against a measured
+                // 89.7, which is the same kind of margin for the same reason.
+                bound {
+                    minValue = 85
+                    coverageUnits = CoverageUnit.BRANCH
+                }
             }
         }
     }

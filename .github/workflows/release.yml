@@ -94,7 +94,7 @@ jobs:
         # A release can be cut from any commitish the release UI offers, including
         # one that never went through a pull request, so this is the only thing
         # standing between an untested tree and a published artifact.
-        run: ./gradlew check apiCheck --stacktrace
+        run: ./gradlew check apiCheck koverVerify :hardware-insets:koverVerify --stacktrace
 
       - name: Build the library and the sample
         # publishToMavenLocal rather than assembleRelease: it writes the aar, the

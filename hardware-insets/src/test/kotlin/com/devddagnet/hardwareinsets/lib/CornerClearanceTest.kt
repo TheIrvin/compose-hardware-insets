@@ -156,20 +156,23 @@ class CornerClearanceTest {
     }
 
     @Test
-    fun `Should say which edges each corner is against`() {
-        // The two properties the clearance reads to decide which corner it is
-        // measuring from. Wrong either way and the control moves off the opposite
-        // edge, which no geometry test would catch because both answers are a
-        // plausible offset.
-        assertThat(WindowCorner.TOP_LEFT.isAtTheTop).isTrue
-        assertThat(WindowCorner.TOP_RIGHT.isAtTheTop).isTrue
-        assertThat(WindowCorner.BOTTOM_LEFT.isAtTheTop).isFalse
-        assertThat(WindowCorner.BOTTOM_RIGHT.isAtTheTop).isFalse
+    fun `Should clear a bottom cutout in the far corner under right to left`() {
+        // The fourth corner, which nothing else here computes: three of the four
+        // reach `cornerClearanceFor` through the tests above and `BOTTOM_RIGHT`
+        // did not, so the one combination where both "measure from the right" and
+        // "measure from the bottom" apply at once was never run.
+        val farCorner = Rect(
+            WINDOW_WIDTH - CONTROL_WIDTH,
+            WINDOW_HEIGHT - 120,
+            WINDOW_WIDTH,
+            WINDOW_HEIGHT,
+        )
+        val nearCorner = Rect(0, WINDOW_HEIGHT - 200, CONTROL_WIDTH, WINDOW_HEIGHT)
 
-        assertThat(WindowCorner.TOP_LEFT.isAtTheRight).isFalse
-        assertThat(WindowCorner.TOP_RIGHT.isAtTheRight).isTrue
-        assertThat(WindowCorner.BOTTOM_LEFT.isAtTheRight).isFalse
-        assertThat(WindowCorner.BOTTOM_RIGHT.isAtTheRight).isTrue
+        val clearance = clearanceFor(listOf(farCorner, nearCorner), isRtl = true, isAtTop = false)
+
+        // Its own corner's cutout, not the deeper one at the other end.
+        assertThat(clearance.y).isEqualTo(120)
     }
 
     private fun clearanceFor(

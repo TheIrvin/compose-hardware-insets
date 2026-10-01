@@ -6,7 +6,7 @@ kotlin = "2.2.21"
 # AGP 8.x reads an internal API that Gradle 9.6 removed, so the wrapper stays
 # at 9.5 until AGP 9. See the wrapper properties.
 binaryCompatibility = "0.18.1"
-kover = "0.9.1"
+kover = "0.9.11"
 
 activity = "1.13.0"
 appcompat = "1.7.1"

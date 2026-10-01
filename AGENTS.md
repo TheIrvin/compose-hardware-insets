@@ -6,7 +6,7 @@ on purpose.
 ## The one command
 
 ```
-JAVA_HOME=<a JDK 21> ./gradlew check apiCheck
+JAVA_HOME=<a JDK 21> ./gradlew check apiCheck koverVerify :hardware-insets:koverVerify
 ```
 
 **JDK 21 is required.** Robolectric loads the Android jar for the emulated SDK and the API 36 jar

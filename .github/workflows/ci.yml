@@ -46,7 +46,10 @@ jobs:
         # from the root build file, and the library overall at 90% line. Separate
         # from `check` so a failure says which, and because a coverage drop and a
         # failing test deserve different first reactions.
-        run: ./gradlew koverVerify :hardware-insets:koverVerify --stacktrace
+        # koverLog first, so the figures are in the log. koverVerify prints
+        # nothing on success, and a filter that matched almost nothing would pass
+        # silently with no way to see it from the run.
+        run: ./gradlew koverLog koverVerify :hardware-insets:koverVerify --stacktrace
 
       - name: Public API unchanged
         # Separate from `check` so a failure here is unambiguous: it means the
