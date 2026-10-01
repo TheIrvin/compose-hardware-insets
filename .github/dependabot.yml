@@ -1,0 +1,43 @@
+version: 2
+
+updates:
+  # Reads gradle/libs.versions.toml as well as the build files.
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # The BOM pins every Compose artifact that carries no version of its own, so
+      # bumping it alone moves all of them. Grouped with the Compose artifacts that
+      # do declare one, or a pull request lands that changes half the set.
+      compose:
+        patterns:
+          - androidx.compose*
+      # `kotlin-android` and `kotlin-compose` share one version.ref on purpose: the
+      # Compose compiler plugin ships in the Kotlin repository and has to match it
+      # exactly. Separate pull requests would propose a pair that cannot build.
+      kotlin:
+        patterns:
+          - org.jetbrains.kotlin*
+      test:
+        patterns:
+          - junit*
+          - org.assertj*
+          - org.robolectric*
+          - androidx.test*
+    ignore:
+      # Two caps with reasons, both written in the catalog and the wrapper
+      # properties. AGP 9 needs Gradle 9.6+, which the wrapper cannot take while
+      # AGP 8.x reads an internal API that 9.6 removed, so the pair moves by hand
+      # or not at all.
+      - dependency-name: com.android.tools.build:gradle
+        update-types: [version-update:semver-major]
+
+  # Pinned by commit SHA here, every one of them, so nothing moves a pin except
+  # something that opens a pull request to move it.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
