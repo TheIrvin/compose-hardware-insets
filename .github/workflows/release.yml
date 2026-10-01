@@ -1,0 +1,140 @@
+name: Release artifacts
+
+# On the release being published rather than on the tag being pushed: the upload
+# needs a release object to attach to, and a tag push can arrive before one
+# exists. Publishing a release always implies its tag.
+#
+# **This file has to be in the tagged commit, not just on the default branch.** A
+# run uses the workflow present at the ref the event carries, and for a release
+# that ref is the tag; the release event is one of the ones with no default-branch
+# fallback. Releases here are tagged on `main`, so a promotion that has not reached
+# `main` yet means a release that attaches nothing, with no failing check to say so.
+# `CONTRIBUTING.md` puts that in the release procedure.
+#
+# `published` fires for a pre-release too, including one published from a draft, so
+# a release candidate gets the same five files. Three things this event does not do,
+# none of them fixable from here: editing a published release fires `edited`, so a
+# correction never re-attaches; a tag pushed with no release produces no run, and
+# JitPack serves that tag with no assets; and a release created by anything
+# authenticating as GITHUB_TOKEN produces no run at all, so automating release
+# creation would silently stop the attachment.
+on:
+  release:
+    types: [published]
+
+# Uploading is not a thing to cancel halfway, so the group serialises publishes
+# without cancel-in-progress: two near-simultaneous ones would otherwise race
+# each other through `--clobber`.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+# Read-only here so a second job added later inherits this rather than the
+# repository default. The one job that writes says so itself.
+permissions:
+  contents: read
+
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    # The only job in this repository that writes.
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The tag, not the default branch: a release is a statement about one
+          # commit, and the default branch has usually moved on by now.
+          ref: ${{ github.event.release.tag_name }}
+          # Without this, checkout leaves this job's token in .git/config as an
+          # extraheader, and the next step runs the whole Gradle plugin graph,
+          # unverified, with that file readable. The token here can write to the
+          # repository, so a compromise anywhere upstream would escalate from a
+          # bad release asset to a push. Nothing needs the persisted credential:
+          # the upload takes the token explicitly.
+          persist-credentials: false
+
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+
+      - name: The tag and the declared versions agree
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -eu
+          library=$(sed -n 's/^ *version = "\(.*\)"$/\1/p' hardware-insets/build.gradle.kts)
+          sample=$(sed -n 's/^ *versionName = "\(.*\)"$/\1/p' sample/build.gradle.kts)
+          # Compared exactly, with no `v` stripped. JitPack's coordinate *is* the
+          # tag, so a `v0.2.0` tag is served as version `v0.2.0` while the files
+          # here would be named `0.2.0` and the README documents neither.
+          fail=
+          [ "$library" = "$TAG" ] || fail="library $library"
+          [ "$sample" = "$TAG" ] || fail="${fail:+$fail, }sample $sample"
+          if [ -n "$fail" ]; then
+            cat >&2 <<MSG
+          Tag $TAG disagrees with: $fail
+
+          The release is already published, so this cannot be prevented from here,
+          only reported. Bump the version in hardware-insets/build.gradle.kts and
+          sample/build.gradle.kts, then either re-tag that commit or delete this
+          release and cut it again. See CONTRIBUTING.md, "Cutting a release".
+          MSG
+            exit 1
+          fi
+          printf 'VERSION=%s\n' "$library" >> "$GITHUB_ENV"
+
+      - name: The same gates a pull request passes
+        # A release can be cut from any commitish the release UI offers, including
+        # one that never went through a pull request, so this is the only thing
+        # standing between an untested tree and a published artifact.
+        run: ./gradlew check apiCheck --stacktrace
+
+      - name: Build the library and the sample
+        # publishToMavenLocal rather than assembleRelease: it writes the aar, the
+        # sources jar, the pom and the Gradle metadata under one versioned
+        # directory with stable names, where assembleRelease leaves the sources jar
+        # in an intermediates path that moves between AGP versions.
+        run: ./gradlew :hardware-insets:publishToMavenLocal :sample:assembleDebug --stacktrace
+
+      - name: Collect them, and fail on anything missing
+        run: |
+          set -eu
+          out=artifacts
+          mkdir -p "$out"
+          m2="$HOME/.m2/repository/com/devddagnet/hardware-insets/$VERSION"
+          # The pom and the module metadata go too. Without them the aar records
+          # none of its api dependencies, so anyone who drops it into libs/ gets
+          # unresolved Compose symbols and no way to find out why.
+          for f in \
+            "hardware-insets-$VERSION.aar" \
+            "hardware-insets-$VERSION-sources.jar" \
+            "hardware-insets-$VERSION.pom" \
+            "hardware-insets-$VERSION.module" ; do
+            cp "$m2/$f" "$out/"
+          done
+          # The sample ships debug-signed, which is what makes it installable
+          # without the reader generating a key. Its release build is unsigned on
+          # purpose and is published nowhere.
+          cp sample/build/outputs/apk/debug/sample-debug.apk \
+             "$out/hardware-insets-sample-$VERSION.apk"
+          # An empty file uploads as happily as a real one, and reads as a corrupt
+          # download rather than as a broken build.
+          for f in "$out"/*; do
+            [ -s "$f" ] || { echo "$f is empty" >&2; exit 1; }
+          done
+          ls -l "$out"
+
+      - name: Attach them to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        # --clobber so re-running this job replaces the assets instead of failing
+        # on a name that already exists.
+        run: gh release upload "$TAG" artifacts/* --clobber --repo "$GITHUB_REPOSITORY"
