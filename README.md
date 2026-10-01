@@ -1,5 +1,10 @@
 # compose-hardware-insets
 
+[![JitPack](https://jitpack.io/v/damson/compose-hardware-insets.svg)](https://jitpack.io/#damson/compose-hardware-insets)
+[![CI](https://github.com/damson/compose-hardware-insets/actions/workflows/ci.yml/badge.svg)](https://github.com/damson/compose-hardware-insets/actions/workflows/ci.yml)
+[![API 23+](https://img.shields.io/badge/API-23%2B-brightgreen)](#supported)
+[![Licence](https://img.shields.io/github/license/damson/compose-hardware-insets)](LICENSE)
+
 Compose tells you how deep the display cutout goes into each edge. It does not tell you **where**
 the camera is, so there is no supported way to ask whether the hardware is actually in the way of
 one particular control.
