@@ -7,6 +7,10 @@ may change in any 0.x release.
 
 ## [Unreleased]
 
+### Added
+
+- `ScreenEdge.toAlignment()`, mapping a horizontal screen edge to a Compose `Alignment`.
+
 ### Changed
 
 - **Consumers now need Kotlin 2.3.0 or later.** This is built with Kotlin 2.4.20, and a 2.2

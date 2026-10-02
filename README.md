@@ -124,14 +124,12 @@ rectangles it actually overlaps. Two controls, two policies, one screen.
 
 It depends on the library as a Gradle project, so an API change breaks it in the same build.
 
-Three things writing it proved:
+Two things writing it proved:
 
 - **Reading the cutout in a Compose-only app costs twelve lines of `View` code.** You need a sibling
   view for the listener, which means a `FrameLayout`, which means building the content view by hand.
   `ViewerActivity` does it with the reason written down. That is what `rememberCutoutShape()` is for,
   and the sample is why it is the first roadmap item rather than a nice-to-have.
-- **`ScreenEdge` will not lay anything out for you.** The sample writes its own four-case mapping to
-  an `Alignment`. Every caller would write the same one.
 - **The bar icons are a parameter of `drawBehindTheHardware`, not something to set after it.** It
   goes through `enableEdgeToEdge`, which re-picks light or dark icons on every call, so an
   appearance set separately is undone by the next one. Pass `statusBarStyle` and
@@ -139,7 +137,7 @@ Three things writing it proved:
   those calls, as a viewer deciding per picture does, still has to set it again after each one, and
   the only symptom of getting that wrong is a clock nobody can read.
 
-The first two are on the roadmap. The third is what those two parameters are for.
+The first is on the roadmap. The second is why those two parameters exist.
 
 ## API reference
 
@@ -179,7 +177,6 @@ that version shipped rather than at whatever `develop` holds now.
 
 - `rememberCutoutShape()` and a `LocalCutoutShape`, so a Compose-only app never touches a `View`.
   The sample shows what this costs today.
-- An edge to `Alignment` mapping, so `ScreenEdge` can place something and not only name it.
 - Rounded-corner insets. The platform reports corners as a radius from API 31 rather than as an
   inset, and Compose does not expose them either.
 - A safest-edge chooser: given the shape, which edge has the least hardware in it.

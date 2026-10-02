@@ -4,6 +4,11 @@ public final class com/devddagnet/hardwareinsets/lib/HardwareInsetsKt {
 	public static final fun hardwareInsets (Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;Lcom/devddagnet/hardwareinsets/lib/domain/HardwarePolicy;ZLandroidx/compose/runtime/Composer;II)Landroidx/compose/foundation/layout/WindowInsets;
 }
 
+public final class com/devddagnet/hardwareinsets/lib/ScreenEdgeAlignmentKt {
+	public static final fun toAlignment (Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;Z)Landroidx/compose/ui/Alignment;
+	public static synthetic fun toAlignment$default (Lcom/devddagnet/hardwareinsets/lib/domain/ScreenEdge;ZILjava/lang/Object;)Landroidx/compose/ui/Alignment;
+}
+
 public final class com/devddagnet/hardwareinsets/lib/domain/BarBehavior : java/lang/Enum {
 	public static final field PLATFORM_DEFAULT Lcom/devddagnet/hardwareinsets/lib/domain/BarBehavior;
 	public static final field SHOW_TRANSIENT_ON_SWIPE Lcom/devddagnet/hardwareinsets/lib/domain/BarBehavior;

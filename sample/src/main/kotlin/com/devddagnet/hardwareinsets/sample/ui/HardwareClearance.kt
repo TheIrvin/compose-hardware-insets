@@ -5,7 +5,6 @@ import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
@@ -58,26 +57,14 @@ internal val EverythingPolicy = HardwarePolicy(
 /**
  * Which end of the screen this edge puts things at.
  *
- * [toAlignment] and the label's own padding both need the answer, and when they
- * disagree the label reserves its gutter at the end it is not sitting at, which
- * runs the corner control straight through it. That is what `LEFT` did.
+ * The label and its gutter make an app-specific choice for a side edge. For
+ * placing a control at a screen edge, use `toAlignment` after mapping device
+ * edges with `onScreenAt`. The left edge stays in the top group because treating
+ * it as a bottom edge reserves the gutter at the wrong end and lets the corner
+ * control overlap the label.
  */
 internal val ScreenEdge.isPlacedAtTheTop: Boolean
     get() = this == ScreenEdge.TOP || this == ScreenEdge.LEFT
-
-/**
- * The mapping every caller of this library writes for itself, because
- * [ScreenEdge] names an edge without being able to place anything at it.
- */
-internal fun ScreenEdge.toAlignment(): Alignment =
-    if (isPlacedAtTheTop) Alignment.TopStart else Alignment.BottomStart
-
-internal fun ScreenEdge.cornerAlignment(isAtTheEnd: Boolean): Alignment = when (this) {
-    ScreenEdge.TOP, ScreenEdge.LEFT ->
-        if (isAtTheEnd) Alignment.TopEnd else Alignment.TopStart
-    ScreenEdge.BOTTOM, ScreenEdge.RIGHT ->
-        if (isAtTheEnd) Alignment.BottomEnd else Alignment.BottomStart
-}
 
 /**
  * The height the corner row occupies along its edge, measured from where that

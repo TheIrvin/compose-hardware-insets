@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.devddagnet.hardwareinsets.lib.toAlignment
 import com.devddagnet.hardwareinsets.lib.domain.CutoutShape
 import com.devddagnet.hardwareinsets.lib.domain.ScreenEdge
 import com.devddagnet.hardwareinsets.lib.domain.ScreenRotation
@@ -160,7 +161,7 @@ fun ViewerScreen(
             enter = fadeIn(),
             exit = fadeOut(),
             modifier = Modifier
-                .align(edge.cornerAlignment(options.isCornerAtTheEnd))
+                .align(edge.toAlignment(options.isCornerAtTheEnd))
                 .clearOfTheBars(),
         ) {
             CornerActions(
