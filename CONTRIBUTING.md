@@ -5,10 +5,14 @@ Pull requests are welcome. You do not need to ask first.
 ## The one command
 
 ```
-JAVA_HOME=<a JDK 21> ./gradlew check apiCheck
+JAVA_HOME=<a JDK 21> ./gradlew check apiCheck koverVerify :hardware-insets:koverVerify
 ```
 
 That is everything CI runs. If it passes locally it passes there.
+
+The two `koverVerify` tasks are two different gates, which is why both are named: the root one holds
+the pure geometry in `domain` at 100% of lines and branches, and the module one holds the library
+overall at 90% of lines and 85% of branches.
 
 **JDK 21 is required**, not optional. Robolectric loads the Android jar for the emulated SDK, and
 the API 36 jar refuses to load under anything earlier. On JDK 17 every test fails in setup with

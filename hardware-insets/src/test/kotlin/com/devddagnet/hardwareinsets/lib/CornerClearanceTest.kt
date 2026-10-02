@@ -122,6 +122,59 @@ class CornerClearanceTest {
         assertThat(clearance.y).isEqualTo(160)
     }
 
+    @Test
+    fun `Should take the deepest cutout whatever order they arrive in`() {
+        // The platform hands over a list, and nothing promises an order. Taking
+        // the deepest only when it happens to come last would read as correct
+        // against every fixture written deepest-last, and put a control under a
+        // camera on a real device that reports the other way round.
+        val deep = Rect(0, 0, CONTROL_WIDTH, 160)
+        val shallow = Rect(0, 0, CONTROL_WIDTH, 40)
+
+        assertThat(clearanceFor(listOf(deep, shallow)).y).isEqualTo(160)
+        assertThat(clearanceFor(listOf(shallow, deep)).y).isEqualTo(160)
+
+        val deepBottom = Rect(0, WINDOW_HEIGHT - 160, CONTROL_WIDTH, WINDOW_HEIGHT)
+        val shallowBottom = Rect(0, WINDOW_HEIGHT - 40, CONTROL_WIDTH, WINDOW_HEIGHT)
+
+        assertThat(clearanceFor(listOf(deepBottom, shallowBottom), isAtTop = false).y).isEqualTo(160)
+        assertThat(clearanceFor(listOf(shallowBottom, deepBottom), isAtTop = false).y).isEqualTo(160)
+    }
+
+    @Test
+    fun `Should move nothing for a cutout that reaches neither edge`() {
+        // Horizontally in the control's column, vertically in the middle of the
+        // screen: the platform reports a rectangle like this for a camera under
+        // the display, and it is in nobody's corner.
+        val floating = Rect(0, 400, CONTROL_WIDTH, 540)
+
+        val atTop = clearanceFor(listOf(floating), isAtTop = true)
+        val atBottom = clearanceFor(listOf(floating), isAtTop = false)
+
+        assertThat(atTop).isEqualTo(IntOffset.Zero)
+        assertThat(atBottom).isEqualTo(IntOffset.Zero)
+    }
+
+    @Test
+    fun `Should clear a bottom cutout in the far corner under right to left`() {
+        // The fourth corner, which nothing else here computes: three of the four
+        // reach `cornerClearanceFor` through the tests above and `BOTTOM_RIGHT`
+        // did not, so the one combination where both "measure from the right" and
+        // "measure from the bottom" apply at once was never run.
+        val farCorner = Rect(
+            WINDOW_WIDTH - CONTROL_WIDTH,
+            WINDOW_HEIGHT - 120,
+            WINDOW_WIDTH,
+            WINDOW_HEIGHT,
+        )
+        val nearCorner = Rect(0, WINDOW_HEIGHT - 200, CONTROL_WIDTH, WINDOW_HEIGHT)
+
+        val clearance = clearanceFor(listOf(farCorner, nearCorner), isRtl = true, isAtTop = false)
+
+        // Its own corner's cutout, not the deeper one at the other end.
+        assertThat(clearance.y).isEqualTo(120)
+    }
+
     private fun clearanceFor(
         cutouts: List<Rect>,
         sideInset: Int = 0,
