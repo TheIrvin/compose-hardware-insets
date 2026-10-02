@@ -6,7 +6,7 @@
 # properties carry the other half.
 agp = "8.13.2"
 kotlin = "2.2.21"
-binaryCompatibility = "0.18.1"
+binaryCompatibility = "0.18.2"
 kover = "0.9.11"
 dokka = "2.2.0"
 
