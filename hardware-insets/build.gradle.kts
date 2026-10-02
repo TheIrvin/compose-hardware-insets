@@ -2,6 +2,7 @@ import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.dokka)
     alias(libs.plugins.kover)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
@@ -101,6 +102,32 @@ kover {
                     coverageUnits = CoverageUnit.BRANCH
                 }
             }
+        }
+    }
+}
+
+dokka {
+    // The name a reader sees at the top of the page, which is the artifact rather
+    // than the Gradle path.
+    moduleName.set("compose-hardware-insets")
+
+    dokkaSourceSets.configureEach {
+        // Every link in the docs points at the tag, not at a branch: a page
+        // published for 0.1.0 has to keep pointing at the code it documented
+        // after develop has moved on. The workflow passes the tag in; locally it
+        // falls back to the default branch, where a stale link costs nothing.
+        val ref = providers.gradleProperty("dokkaSourceRef").orElse("develop")
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+            remoteUrl("https://github.com/damson/compose-hardware-insets/blob/${ref.get()}/hardware-insets/src/main/kotlin")
+            remoteLineSuffix.set("#L")
+        }
+
+        // Android and Compose types resolve to their own documentation instead of
+        // rendering as bare names.
+        externalDocumentationLinks.register("androidx") {
+            url("https://developer.android.com/reference/kotlin/")
+            packageListUrl("https://developer.android.com/reference/kotlin/androidx/package-list")
         }
     }
 }

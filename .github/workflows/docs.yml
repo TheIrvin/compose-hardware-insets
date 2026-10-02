@@ -1,0 +1,95 @@
+name: API documentation
+
+# **This file has to be in the tagged commit**, exactly as `release.yml` says of
+# itself: a run uses the workflow present at the ref the event carries, and for a
+# release that ref is the tag. `CONTRIBUTING.md` carries it as a release step, and
+# an earlier version of this comment claimed the opposite.
+#
+# Two repository settings this depends on and cannot set for itself. Both are in
+# place; they are written down because nothing in the build fails if one is undone,
+# and a fork starts with neither:
+#
+#   1. Pages enabled with "GitHub Actions" as the source. `configure-pages` offers
+#      an `enablement` input that cannot help here, by its own description: "This
+#      option requires a token other than GITHUB_TOKEN". Enabling goes through
+#      `administration:write`, which is not in the `permissions:` vocabulary at all.
+#   2. The `github-pages` environment allowed to deploy from a tag, which is the
+#      `tag: *` rule beside the default-branch one. GitHub creates that environment
+#      limited to the default branch, and a release run's ref is a tag, so without
+#      the rule the deploy is refused with `Branch "0.2.0" is not allowed to deploy
+#      to github-pages`, naming a branch for a tag and sending you to the wrong
+#      place.
+on:
+  release:
+    types: [published]
+  # A manual run publishes whichever ref is chosen, pinning the source links to that
+  # ref rather than to a release. It is how to prove the setup without cutting a
+  # release, and the only path that works if the tag rule above is ever removed.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time, never cancelled halfway: a cancelled deploy can leave
+# the site on a half-written commit.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    permissions:
+      # `contents` stays read: this pushes nothing to the repository, so unlike
+      # `release.yml` there is no write token to keep off the disk.
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.ref_name }}
+          persist-credentials: false
+
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+
+      - name: Generate
+        env:
+          # Through the environment and quoted at the point of use, for the reason
+          # `release.yml` gives: `${{ }}` is substituted into the script text before
+          # bash sees it, and `git check-ref-format` accepts `$(`, backticks, `;`
+          # and `&&` in a ref name.
+          REF: ${{ github.ref_name }}
+        run: ./gradlew :hardware-insets:dokkaGeneratePublicationHtml "-PdokkaSourceRef=$REF" --stacktrace
+
+      - name: The site documents this ref
+        env:
+          REF: ${{ github.ref_name }}
+        # Not a check that Dokka ran, which its exit status already proved. Dokka
+        # writes a 10KB index.html carrying 446 characters of text even when it
+        # documents nothing, so file existence asserts almost nothing. These two
+        # assert the feature: that declarations have pages, and that their source
+        # links point at the ref being published rather than at whatever a cached
+        # earlier run pinned.
+        run: ./.github/scripts/check-docs.sh hardware-insets/build/dokka/html "$REF"
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: hardware-insets/build/dokka/html
+
+      - id: deploy
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

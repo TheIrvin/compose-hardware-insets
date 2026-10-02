@@ -8,6 +8,7 @@ agp = "8.13.2"
 kotlin = "2.2.21"
 binaryCompatibility = "0.18.1"
 kover = "0.9.11"
+dokka = "2.2.0"
 
 activity = "1.13.0"
 composeBom = "2026.06.01"
@@ -44,5 +45,6 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 binary-compatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibility" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

@@ -51,6 +51,15 @@ jobs:
         # silently with no way to see it from the run.
         run: ./gradlew koverLog koverVerify :hardware-insets:koverVerify --stacktrace
 
+      - name: Documentation builds
+        # Dokka runs nowhere else until a release publishes, so without this the
+        # config can break and still pass every gate, with the first execution
+        # happening on a tag. The same guard the publish job uses, against the
+        # branch this is running for.
+        run: |
+          ./gradlew :hardware-insets:dokkaGeneratePublicationHtml             "-PdokkaSourceRef=$GITHUB_SHA" --stacktrace
+          ./.github/scripts/check-docs.sh hardware-insets/build/dokka/html "$GITHUB_SHA"
+
       - name: Public API unchanged
         # Separate from `check` so a failure here is unambiguous: it means the
         # public surface moved and the dump was not regenerated.
