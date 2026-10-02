@@ -37,7 +37,12 @@ internal fun Modifier.markers(cutout: CutoutShape, isShowing: Boolean): Modifier
             )
         }
 
-        cutout.bounds.forEach { rect ->
+        // A `for` loop rather than `forEach`: on a list reaching here from the
+        // library, Kotlin 2.4 resolves `forEach` to `java.lang.Iterable#forEach`,
+        // which arrives at API 24 where this sample declares 23. Lint catches it,
+        // but only on the Kotlin version that changes the resolution, so the
+        // version bump reads as the fault rather than the call.
+        for (rect in cutout.bounds) {
             val topLeft = Offset(rect.left.toFloat(), rect.top.toFloat())
             val of = Size(rect.width().toFloat(), rect.height().toFloat())
             drawRect(CutoutMarker.copy(alpha = 0.45f), topLeft = topLeft, size = of)

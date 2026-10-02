@@ -11,6 +11,9 @@ kover = "0.9.11"
 dokka = "2.2.0"
 
 activity = "1.13.0"
+# Capped with AGP, not independently: 2026.09.00 brings foundation-android 1.12.1,
+# which requires compileSdk 37, which needs AGP 9 and Gradle 9.6. All three move
+# together or none of them do.
 composeBom = "2026.06.01"
 coreKtx = "1.18.0"
 

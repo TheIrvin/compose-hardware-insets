@@ -31,7 +31,7 @@ import kotlin.math.abs
  * insets it takes is the sheet's first switch.
  */
 @Composable
-internal fun Modifier.clearOfTheBars(): Modifier = clearOfTheHardware(
+internal fun Modifier.clearOfTheBars(): Modifier = this.clearOfTheHardware(
     policy = HardwarePolicy(
         isCutoutIncluded = false,
         isWaterfallIncluded = false,
@@ -46,7 +46,7 @@ internal fun Modifier.clearOfTheBars(): Modifier = clearOfTheHardware(
  * gets the precise one.
  */
 @Composable
-internal fun Modifier.clearOfEverything(): Modifier = clearOfTheHardware(policy = EverythingPolicy)
+internal fun Modifier.clearOfEverything(): Modifier = this.clearOfTheHardware(policy = EverythingPolicy)
 
 /** The policy behind [clearOfEverything], named so the label can ask about it too. */
 internal val EverythingPolicy = HardwarePolicy(

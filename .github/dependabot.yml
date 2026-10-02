@@ -57,6 +57,13 @@ updates:
         versions: ['>= 9']
       - dependency-name: com.android.library
         versions: ['>= 9']
+      # The same chain reaches the Compose BOM, which is not obvious until a build
+      # fails on it. 2026.09.00 brings `foundation-android` 1.12.1, which requires
+      # compileSdk 37; 37 needs an AGP that supports it, which is AGP 9, which needs
+      # Gradle 9.6. So the BOM cannot move until the two above do, and a weekly pull
+      # request that cannot build is worse than none. Lift all three together.
+      - dependency-name: androidx.compose:compose-bom
+        versions: ['>= 2026.09.00']
 
   # Pinned by commit SHA here, every one of them, so a pin cannot move unless
   # something opens a pull request to move it. Dependabot rewrites the trailing
