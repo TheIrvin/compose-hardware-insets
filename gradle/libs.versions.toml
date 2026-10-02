@@ -1,14 +1,14 @@
 [versions]
 # Kept deliberately behind the newest where a cap has a reason; each such line
 # says why, so the next person raising it knows what they are taking on.
+# Capped at 8: AGP 9 needs Gradle 9.6 or newer, and AGP 8.x reads an internal API
+# that 9.6 removed, so neither this nor the wrapper can move first. The wrapper
+# properties carry the other half.
 agp = "8.13.2"
 kotlin = "2.2.21"
-# AGP 8.x reads an internal API that Gradle 9.6 removed, so the wrapper stays
-# at 9.5 until AGP 9. See the wrapper properties.
 binaryCompatibility = "0.18.1"
 
 activity = "1.13.0"
-appcompat = "1.7.1"
 composeBom = "2026.06.01"
 coreKtx = "1.18.0"
 
@@ -19,7 +19,6 @@ robolectric = "4.17"
 [libraries]
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
