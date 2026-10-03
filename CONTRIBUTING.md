@@ -18,6 +18,25 @@ overall at 90% of lines and 85% of branches.
 the API 36 jar refuses to load under anything earlier. On JDK 17 every test fails in setup with
 `Failed to create a Robolectric sandbox`, which reads like broken tests rather than a wrong JDK.
 
+## Branches and pull requests
+
+Gitflow, on two long-lived branches. `develop` integrates and `main` carries releases, so a change is
+cut from `develop` as `feature/<what-it-does>` and merged back into it; `release/` and `hotfix/` are the
+other two prefixes gitflow defines. Nothing enforces the naming, which is how the history behind this
+file ended up with four other prefixes.
+
+**Target `develop`.** `main` receives two things only: a promotion of `develop`, and a hotfix. A feature
+pull request against `main` would put unreleased work on the branch that gets tagged.
+
+Each of the three has a template, and the two uncommon ones have to be named in the URL, because GitHub
+applies the default without offering a choice:
+
+| Flow | Base | Template |
+|---|---|---|
+| Ordinary work | `develop` | the default, applied automatically |
+| Promotion | `main` | add `?template=release.md` to the compare URL |
+| Hotfix | `main` | add `?template=hotfix.md` |
+
 ## What a change needs
 
 - **A test that has been seen failing.** Break what your new test guards, watch it go red, put it
