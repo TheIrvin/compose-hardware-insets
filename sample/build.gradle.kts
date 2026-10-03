@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.devddagnet.hardwareinsets.sample"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.devddagnet.hardwareinsets.sample"

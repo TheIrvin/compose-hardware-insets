@@ -145,6 +145,23 @@ The first two are on the roadmap. The third is what those two parameters are for
 - `minSdk 23`, which is Compose's floor rather than this library's. The cutout API arrives at API
   28 and the waterfall at API 30; below each, the platform reports nothing and this reports zero, so
   there is nothing to branch on in your code.
+- **`compileSdk 36` or later in your project, and AGP 8.9.1 or later.** Neither is this library's
+  floor. `androidx.activity` 1.13 and `androidx.core` 1.18 each declare both in their aar metadata,
+  and they reach you because this exports Compose and Activity and carries `core` on the runtime
+  classpath. This library's own aar asks for `compileSdk 30`, the highest platform API its code
+  touches. Below either floor the dependency resolves and then `checkDebugAarMetadata`, or
+  `checkReleaseAarMetadata` for a release build, fails with a message naming the artifact that
+  wants more and the `compileSdk` your module is on.
+- **Kotlin 2.3.0 or later in your project.** This is built with 2.4.20, and a Kotlin compiler reads
+  metadata from its own version and one minor back, so a 2.2 compiler cannot read it:
+
+  ```
+  Module was compiled with an incompatible version of Kotlin.
+  The binary version of its metadata is 2.4.0, expected version is 2.2.0.
+  ```
+
+  What that asks of you is the Kotlin plugin version in your build, and nothing in your code.
+  `0.1.0` was built with 2.2.21, so this is the only requirement that moved.
 
 ## Status
 

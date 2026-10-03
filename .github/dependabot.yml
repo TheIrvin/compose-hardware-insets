@@ -38,33 +38,14 @@ updates:
       kotlin:
         patterns:
           - org.jetbrains.kotlin.*
+    # Two holdbacks, both because the artifact pushes a `compileSdk 37` and AGP
+    # 9.1 floor onto consumers rather than because anything here breaks. The
+    # reason and the condition for lifting them are on the catalogue lines, and
+    # issue #39 holds the threshold. Without these the same pull request arrives
+    # weekly and has to be closed by hand every time.
     ignore:
-      # AGP 9 needs Gradle 9.6 or newer, and AGP 8.x reads an internal API that
-      # Gradle 9.6 removed, so neither can move first: it is a migration done by
-      # hand, in one commit, or not at all.
-      #
-      # Named by plugin id, because that is how a catalogue declares AGP. The
-      # module coordinate `com.android.tools.build:gradle` appears nowhere in this
-      # project, and an `ignore` that matches nothing is not an error: it is a
-      # silent no-op that leaves the cap unguarded.
-      #
-      # A version range rather than `update-types: semver-major`, for two reasons.
-      # It expires by itself once 9 is taken, where a major-version ban would go
-      # on suppressing 10 and 11 with nothing left to explain why. And `ignore`
-      # applies to security updates as well as version updates, so a blanket major
-      # ban would also hide a major-version security fix.
-      - dependency-name: com.android.application
-        versions: ['>= 9']
-      - dependency-name: com.android.library
-        versions: ['>= 9']
-      # The same chain reaches the Compose BOM, which is not obvious until a build
-      # fails on it. 2026.09.00 brings `foundation-android` 1.12.1, which requires
-      # compileSdk 37; 37 needs an AGP that supports it, which is AGP 9, which needs
-      # Gradle 9.6. So the BOM cannot move until the two above do, and a weekly pull
-      # request that cannot build is worse than none. Lift all three together.
       - dependency-name: androidx.compose:compose-bom
-        versions: ['>= 2026.09.00']
-
+      - dependency-name: androidx.core:core-ktx
   # Pinned by commit SHA here, every one of them, so a pin cannot move unless
   # something opens a pull request to move it. Dependabot rewrites the trailing
   # `# vX.Y.Z` comment along with the SHA.

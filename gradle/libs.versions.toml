@@ -1,20 +1,22 @@
 [versions]
-# Kept deliberately behind the newest where a cap has a reason; each such line
-# says why, so the next person raising it knows what they are taking on.
-# Capped at 8: AGP 9 needs Gradle 9.6 or newer, and AGP 8.x reads an internal API
-# that 9.6 removed, so neither this nor the wrapper can move first. The wrapper
-# properties carry the other half.
-agp = "8.13.2"
-kotlin = "2.2.21"
+# Nothing is capped. If a version has to be held back, say why on the line itself,
+# so the next person raising it knows what they are taking on, and add the matching
+# `ignore` to .github/dependabot.yml so it stops arriving weekly.
+agp = "9.4.1"
+kotlin = "2.4.20"
 binaryCompatibility = "0.18.2"
 kover = "0.9.11"
 dokka = "2.2.0"
 
 activity = "1.13.0"
-# Capped with AGP, not independently: 2026.09.00 brings foundation-android 1.12.1,
-# which requires compileSdk 37, which needs AGP 9 and Gradle 9.6. All three move
-# together or none of them do.
+# Held, and not for this repository's sake: 2026.09.00 brings foundation-layout
+# 1.12.1, which declares `minCompileSdk=37` and AGP 9.1, and this library exports
+# Compose as `api`, so both land on every consumer. Nothing here uses an API past
+# 30. Raise it when requiring compileSdk 37 of consumers is acceptable, which
+# issue #39 holds the threshold for.
 composeBom = "2026.06.01"
+# Held with the Compose line: 1.19.1 declares `minCompileSdk=37` and AGP 9.1 too,
+# so raising it alone reimposes exactly what holding Compose avoids.
 coreKtx = "1.18.0"
 
 assertj = "3.27.7"
